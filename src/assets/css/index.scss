@@ -15,3 +15,11 @@ body .app {
 #__vconsole {
   display: none;
 }
+#app{
+  padding-top: 46px;
+}
+.van-nav-bar__title,
+.van-nav-bar .van-icon{
+  font-weight: bold;
+  color: $font-color;
+}

@@ -1,11 +1,12 @@
 <!-- home -->
 <template>
   <div class="container">
+    <van-nav-bar fixed title="我的" z-index="99" />
     <!-- 头部 -->
     <div class="banner">
       <div class="sys-box">
         <div class="sys_icon"><img src="../../../static/image/mine/sys_icon.png" alt=""></div>
-        <div class="info_icon"><img src="../../../static/image/mine/info_icon.png" alt=""></div>
+        <div class="info_icon" @click="onMessage"><img src="../../../static/image/mine/info_icon.png" alt=""></div>
       </div>
       <div class="user_info">
         <van-image width="62" height="62" round fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
@@ -21,21 +22,21 @@
     <!-- 订单状态 -->
     <div class="conten">
       <div class="order_nav">
-        <div>
+        <div @click="onWait(1)">
           <van-image width="28" height="29" fit="cover" :src="navIcon[0]" />
-          <div>带配送</div>
+          <div>待付款</div>
         </div>
-        <div>
+        <div @click="onWait(2)">
           <van-image width="34" height="29" fit="cover" :src="navIcon[1]" />
-          <div>带配送</div>
+          <div>待配送</div>
         </div>
-        <div>
+        <div @click="onWait(3)">
           <van-image width="28" height="29" fit="cover" :src="navIcon[2]" />
-          <div>带配送</div>
+          <div>待签收</div>
         </div>
-        <div>
+        <div @click="onWait(4)">
           <van-image width="25" height="29" fit="cover" :src="navIcon[3]" />
-          <div>带配送</div>
+          <div>已完成</div>
         </div>
       </div>
       <!-- 账户情况 -->
@@ -46,8 +47,8 @@
           <div class="total">累计收益：￥888888</div>
         </div>
         <div class="submit_box">
-          <div class="btn tx_btn">立即体现</div>
-          <div class="btn list_btn">提现记录</div>
+          <div class="btn tx_btn" @click="onWithdrawal">立即提现</div>
+          <div class="btn list_btn" @click="onWithdrawalList">提现记录</div>
         </div>
       </div>
 
@@ -59,18 +60,20 @@
 
       <!-- 列表 -->
       <van-cell-group>
-        <van-cell  is-link to="">
+        <van-cell is-link :to="item.link" v-for="(item,index) in cellList" :key="index">
           <template #title>
-            <span class="s_icon"><img src="../../../static/image/mine/address_icon.png" alt=""></span>
-            <span class="custom-title">单元格</span>
+            <span class="s_icon"><img :src="item.icon_url" alt=""></span>
+            <span class="custom-title">{{item.title}}</span>
           </template>
         </van-cell>
       </van-cell-group>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+  import Footer from '@/components/Footer'
   // 请求接口
   import {
     getUserInfo
@@ -86,45 +89,113 @@
           require('../../../static/image/mine/dps_icon.png'),
           require('../../../static/image/mine/dqs_icon.png'),
           require('../../../static/image/mine/success_icon.png')
+        ],
+        cellList: [{
+            icon_url: require('../../../static/image/mine/active_icon.png'),
+            title: '我的动态',
+            link: ''
+          },
+          {
+            icon_url: require('../../../static/image/mine/group_icon.png'),
+            title: '我的团队',
+            link: '/my_group'
+          }, {
+            icon_url: require('../../../static/image/mine/coin_ico.png'),
+            title: '收益明细',
+            link: ''
+          },
+          {
+            icon_url: require('../../../static/image/mine/kucun_icon.png'),
+            title: '我的库存',
+            link: '/my_stock'
+          },
+          {
+            icon_url: require('../../../static/image/mine/address_icon.png'),
+            title: '收获地址',
+            link: ''
+          },
+          {
+            icon_url: require('../../../static/image/mine/serves_icon.png'),
+            title: '客服服务',
+            link: ''
+          }
         ]
       }
     },
     computed: {
       ...mapGetters(['userName'])
     },
+    components: {
+      Footer
+    },
     mounted() {
-      this.initData()
+      // this.initData()
     },
     methods: {
-      // 请求数据案例
-      initData() {
-        // 请求接口数据，仅作为展示，需要配置src->config下环境文件
-        const params = {
-          user: 'sunnie'
-        }
-        getUserInfo(params)
-          .then(() => {})
-          .catch(() => {})
+      // 订单状态导航
+      onWait(e) {
+        this.$router.push({
+          path: '/my_order',
+          query: {
+            active: e
+          },
+        })
+        // switch (e) {
+        //   case 1:
+        //     this.$router.push('/wait_pay')
+        //     break;
+        //   case 2:
+        //     this.$router.push('/wait_send')
+        //     break;
+        //   case 3:
+        //     this.$router.push('/wait_sign')
+        //     break;
+        //   case 4:
+        //     this.$router.push('/complate')
+        //     break;
+        //   default:
+        //     break;
+        // }
       },
-      // Action 通过 store.dispatch 方法触发
-      doDispatch() {
-        this.$store.dispatch('setUserName', '12313')
-      }
+      // 消息
+      onMessage() {
+        this.$router.push('/message')
+      },
+      // 提现
+      onWithdrawal() {
+        this.$router.push('/withdrawal')
+      },
+      // 提现记录
+      onWithdrawalList() {
+        this.$router.push('/withdrawal_list')
+      },
+      // // 请求数据案例
+      // initData() {
+      //   // 请求接口数据，仅作为展示，需要配置src->config下环境文件
+      //   const params = {
+      //     user: 'sunnie'
+      //   }
+      //   getUserInfo(params)
+      //     .then(() => {})
+      //     .catch(() => {})
+      // },
+      // // Action 通过 store.dispatch 方法触发
+      // doDispatch() {
+      //   this.$store.dispatch('setUserName', '12313')
+      // }
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .banner {
-    color: #ffffff;
+    color: $white-color;
     height: 3.866666rem;
     width: 100%;
     background: url(../../../static/image/mine/mine_bg.png) no-repeat center;
     background-size: cover;
 
     .user_info {
-      display: flex;
-      align-items: center;
-      padding: 0 0.4rem;
+      @include flexbox($jc: '') padding: 0 0.4rem;
     }
 
     .user_box {
@@ -152,7 +223,7 @@
 
     .code {
       display: inline-block;
-      border: 1px solid #ffffff;
+      border: 1px solid $white-color;
       font-size: 10px;
       height: 0.56rem;
       line-height: 0.56rem;
@@ -162,7 +233,7 @@
     .copy-btn {
       display: inline-block;
       height: 100%;
-      background-color: #ffffff;
+      background-color: $white-color;
       color: #2a3745;
       font-size: 12px;
       width: 1.013333rem;
@@ -190,10 +261,7 @@
 
   .order_nav {
     height: 2.506666rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
+    @include flexbox($jc: space-between) text-align: center;
     margin: -0.586666rem 0.133333rem 0;
     position: relative;
     z-index: 9;
@@ -203,10 +271,7 @@
   }
 
   .my_count {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 2.8rem;
+    @include flexbox($jc: space-between) height: 2.8rem;
     margin: 0.453333rem 0.133333rem;
     background: url(../../../static/image/mine/yue_bg.png) no-repeat center;
     background-size: cover;
@@ -216,7 +281,7 @@
       color: #111111;
 
       .caption {
-        font-size: 14px;
+        font-size: $font-size14;
       }
 
       .money {
@@ -247,10 +312,7 @@
   }
 
   .poster_box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 0.32rem;
+    @include flexbox($jc: space-between) margin: 0 0.32rem 0.4rem;
 
     .img_box {
       height: 2.133333rem;
@@ -262,7 +324,22 @@
       }
     }
   }
-.van-cell__title{
-  
-}
+
+  .s_icon {
+    display: inline-block;
+    vertical-align: middle;
+    height: 0.373333rem;
+    width: 0.373333rem;
+    margin-right: 0.186666rem;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .custom-title {
+    display: inline-block;
+    vertical-align: text-top;
+  }
 </style>

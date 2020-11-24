@@ -1,6 +1,7 @@
 <!-- home -->
 <template>
   <div class="index-container">
+    <van-nav-bar fixed title="首页" z-index="99"/>
     <div class="warpper">
       <h1 class="demo-home__title"><img src="https://imgs.solui.cn/weapp/logo.png" /><span> VUE H5开发模板</span></h1>
       <h2 class="demo-home__desc">
