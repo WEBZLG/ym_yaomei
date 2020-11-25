@@ -5,7 +5,7 @@
     <!-- 头部 -->
     <div class="banner">
       <div class="sys-box">
-        <div class="sys_icon"><img src="../../../static/image/mine/sys_icon.png" alt=""></div>
+        <div class="sys_icon"  @click="onSystem"><img src="../../../static/image/mine/sys_icon.png" alt=""></div>
         <div class="info_icon" @click="onMessage"><img src="../../../static/image/mine/info_icon.png" alt=""></div>
       </div>
       <div class="user_info">
@@ -112,7 +112,7 @@
           {
             icon_url: require('../../../static/image/mine/address_icon.png'),
             title: '收获地址',
-            link: ''
+            link: '/address'
           },
           {
             icon_url: require('../../../static/image/mine/serves_icon.png'),
@@ -140,26 +140,15 @@
             active: e
           },
         })
-        // switch (e) {
-        //   case 1:
-        //     this.$router.push('/wait_pay')
-        //     break;
-        //   case 2:
-        //     this.$router.push('/wait_send')
-        //     break;
-        //   case 3:
-        //     this.$router.push('/wait_sign')
-        //     break;
-        //   case 4:
-        //     this.$router.push('/complate')
-        //     break;
-        //   default:
-        //     break;
-        // }
+
       },
       // 消息
       onMessage() {
         this.$router.push('/message')
+      },
+      //设置
+      onSystem(){
+        this.$router.push('/system')
       },
       // 提现
       onWithdrawal() {

@@ -7,7 +7,7 @@
       <van-tab v-for="(item,index) in tabList" :title="item" :key='index'></van-tab>
     </van-tabs>
     <div>
-      <GoodsItem :content='content'></GoodsItem>
+      <GoodsItem :content='content' @action="onAction" @detail="onDetail"></GoodsItem>
     </div>
   </div>
 </template>
@@ -27,7 +27,13 @@
           thumb: "https://img.yzcdn.cn/vant/cat.jpeg",
           money: "88.00",
           size_name: '10g/片',
-          buy_num: '66'
+          buy_num: '66',
+          order_num:'34567890',
+          status:'待付款',
+          total:'888',
+          post_num:'666',
+          number:'333',
+          id:12
         },
       }
     },
@@ -41,6 +47,12 @@
       onClickLeft() {
         this.$router.go(-1)
       },
+      onAction(type,id){
+          console.log(type,id)
+      },
+      onDetail(){
+        console.log('详情')
+      }
     }
   }
 </script>

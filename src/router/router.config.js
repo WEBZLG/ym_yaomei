@@ -120,5 +120,41 @@ export const constantRouterMap = [{
       keepAlive: false
     }
   },
+  {
+    path: '/system',
+    name: 'System',
+    component: () => import('@/views/mine/system'),
+    meta: {
+      title: '设置',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/changePhone',
+    name: 'ChangePhone',
+    component: () => import('@/views/mine/changePhone'),
+    meta: {
+      title: '修改手机号',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/address',
+    name: 'Address',
+    component: () => import('@/views/mine/address'),
+    meta: {
+      title: '收货地址',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/add_address',
+    name: 'AddAddress',
+    component: () => import('@/views/mine/add_address'),
+    meta: {
+      title: '收货地址',
+      keepAlive: false
+    }
+  },
 
 ]
