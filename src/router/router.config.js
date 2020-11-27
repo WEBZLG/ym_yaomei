@@ -156,5 +156,95 @@ export const constantRouterMap = [{
       keepAlive: false
     }
   },
+  {
+    path: '/income_list',
+    name: 'IncomeList',
+    component: () => import('@/views/mine/income_list'),
+    meta: {
+      title: '收入明细',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/service',
+    name: 'Service',
+    component: () => import('@/views/mine/service'),
+    meta: {
+      title: '客服服务',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/goods_apply',
+    name: 'GoodsApply',
+    component: () => import('@/views/mine/goods_apply'),
+    meta: {
+      title: '补货申请',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/goods_apply_submit',
+    name: 'GoodsApplySubmit',
+    component: () => import('@/views/mine/goods_apply_submit'),
+    meta: {
+      title: '补货申请',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/replenish_list',
+    name: 'ReplenishLlist',
+    component: () => import('@/views/mine/replenish_list'),
+    meta: {
+      title: '补货记录',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/goods_stock',
+    name: 'GoodsStock',
+    component: () => import('@/views/mine/goods_stock'),
+    meta: {
+      title: '商品库存',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/my_cdkey',
+    name: 'MyCdkey',
+    component: () => import('@/views/mine/my_cdkey'),
+    meta: {
+      title: '我的兑换码',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/upgrade',
+    name: 'Upgrade',
+    component: () => import('@/views/mine/upgrade'),
+    meta: {
+      title: '在线升级',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/gift_bag',
+    name: 'GiftBag',
+    component: () => import('@/views/home/gift_bag'),
+    meta: {
+      title: '精品礼包',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/goods_detail',
+    name: 'GoodsDetail',
+    component: () => import('@/views/home/goods_detail'),
+    meta: {
+      title: '商品详情',
+      keepAlive: false
+    }
+  },
 
 ]

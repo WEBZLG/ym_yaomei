@@ -3,15 +3,15 @@
     <van-nav-bar fixed title="我的库存"  z-index="99"  left-arrow @click-left="onClickLeft" />
     <div class="white_bg">
       <div class="icon_nav">
-        <div>
+        <div @click="onStock">
           <div class="icon_nav1"><img src="../../../static/image/mine/stock_icon.png" alt=""></div>
           <div>商品库存</div>
         </div>
-        <div>
+        <div @click="onApply">
           <div class="icon_nav2"><img src="../../../static/image/mine/apply_icon.png" alt=""></div>
           <div>补货申请</div>
         </div>
-        <div>
+        <div @click="onReplenish">
           <div class="icon_nav3"><img src="../../../static/image/mine/buhuo_icon.png" alt=""></div>
           <div>补货记录</div>
         </div>
@@ -21,7 +21,7 @@
           <div class="code_icon"><img src="../../../static/image/mine/code_icon.png" alt=""></div>
           <div class="code_text">我的兑换码</div>
         </div>
-        <div class="view_btn">
+        <div class="view_btn" @click="onView">
           <img src="../../../static/image/mine/view_icon.png" alt="">
         </div>
       </div>
@@ -59,6 +59,19 @@
       onClickLeft(){
         this.$router.go(-1)
       },
+      onApply(){
+         this.$router.push('/goods_apply')
+      },
+      onReplenish(){
+        this.$router.push('/replenish_list')
+      },
+      onStock(){
+         this.$router.push('/goods_stock')
+      },
+      onView(){
+        this.$router.push('/my_cdkey')
+      }
+
     },
     components: {
       Caption

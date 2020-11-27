@@ -1,5 +1,5 @@
 <template>
-  <div class="goodsInfo" @click="onclick(content.id)">
+  <div class="goods_apply">
     <div>
       <van-image height="100" width="100" lazy-load :src="content.thumb">
         <template v-slot:loading>
@@ -10,16 +10,16 @@
     <div class="parameter">
       <h3 class="title">{{content.name}}</h3>
       <div>￥<span>{{content.money}}</span></div>
-      <div v-if="content.size_name">规格：<span>{{content.size_name}}</span></div>
-      <div v-if="content.buy_num">数量：<span>{{content.buy_num}}</span></div>
-      <div v-if="content.stock">自有库存数：<span>{{content.stock}}</span></div>
+      <div class="text_right">
+        <div class="btn_apply" @click="onClick"><img src="../../static/image/mine/apply_img.png" alt=""></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'GoodsInfo',
+    name: 'GoodApply',
     props: {
       content: {
         type: Object,
@@ -32,7 +32,7 @@
       }
     },
     methods: {
-      onclick(value){
+      onClick(value){
         this.$emit('onclick',value)
       }
     }
@@ -40,10 +40,11 @@
 </script>
 
 <style scoped="scoped" lang="scss">
-  .goodsInfo {
+  .goods_apply {
     @include flexbox;
     background-color: $white-color;
     padding: 0.4rem 0.32rem;
+    border-bottom: 1px solid #f5f5f5;
     .parameter{
       line-height: 22px;
       margin-left: 0.32rem;
@@ -64,6 +65,16 @@
 
     .parameter span {
       color: #282828;
+    }
+    .text_right{
+      text-align: right;
+      .btn_apply{
+        display: inline-block;
+        width: 2.266666rem;
+        img{
+          width: 100%;
+        }
+      }
     }
 
   }

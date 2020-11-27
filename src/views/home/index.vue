@@ -1,80 +1,118 @@
 <!-- home -->
 <template>
-  <div class="index-container">
-    <van-nav-bar fixed title="首页" z-index="99"/>
-    <div class="warpper">
-      <h1 class="demo-home__title"><img src="https://imgs.solui.cn/weapp/logo.png" /><span> VUE H5开发模板</span></h1>
-      <h2 class="demo-home__desc">
-        A vue h5 template with Vant UI
-      </h2>
+  <div class="home">
+    <van-nav-bar fixed title="首页" z-index="99" left-arrow @click-left="onClickLeft" />
+    <div>
+      <van-swipe :autoplay="3000">
+        <van-swipe-item v-for="(image, index) in images" :key="index">
+          <img v-lazy="image" />
+        </van-swipe-item>
+      </van-swipe>
+      <div class="gift_img" @click="onGift"><img src="../../../static/image/home/gift_img.png" alt=""></div>
+      <Caption content='代理商品' @click="onView"></Caption>
+      <div class="goods_list">
+        <Goods @onclick="onDetail"></Goods>
+      </div>
     </div>
-    <van-cell icon="success" v-for="item in list" :key="item" :title="item" />
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      list: [
-        'Vue-cli4',
-        '配置多环境变量',
-        'VantUI 组件按需加载',
-        'Sass 全局样式',
-        'Webpack 4',
-        'Vuex 状态管理',
-        'Axios 封装及接口管理',
-        'Vue-router',
-        'Webpack 4 vue.config.js 基础配置',
-        '配置 proxy 跨域',
-        '配置 alias 别名',
-        '配置 打包分析',
-        '配置 externals 引入 cdn 资源',
-        '去掉 console.log',
-        'splitChunks 单独打包第三方模块',
-        '添加 IE 兼容',
-        'Eslint+Pettier 统一开发规范',
-        'vconsole',
-        '动态设置title',
-        '配置Jssdk',
-        '本地存储storage封装'
-      ]
-    }
-  },
-
-  computed: {},
-
-  mounted() {},
-
-  methods: {}
-}
-</script>
-<style lang="scss" scoped>
-.index-container {
-  .warpper {
-    padding: 12px;
-    background: #fff;
-    .demo-home__title {
-      margin: 0 0 6px;
-      font-size: 32px;
-      .demo-home__title img,
-      .demo-home__title span {
-        display: inline-block;
-        vertical-align: middle;
+  import Goods from '@/components/Goods'
+  import Caption from '@/components/Caption'
+  export default {
+    data() {
+      return {
+        images: [
+          'https://img.yzcdn.cn/vant/apple-1.jpg',
+          'https://img.yzcdn.cn/vant/apple-2.jpg',
+        ],
       }
-      img {
-        width: 32px;
+    },
+
+    components: {
+      Caption,
+      Goods
+    },
+    mounted() {},
+
+    methods: {
+      onClickLeft() {
+        this.$router.go(-1)
+      },
+      onGift(){
+        this.$router.push('/gift_bag')
+      },
+      onDetail(){
+        console.log(123)
+        this.$router.push('/goods_detail')
+      },
+      onView(){
+
       }
-      span {
-        margin-left: 16px;
-        font-weight: 500;
-      }
-    }
-    .demo-home__desc {
-      margin: 0 0 20px;
-      color: rgba(69, 90, 100, 0.6);
-      font-size: 14px;
     }
   }
-}
+</script>
+<style lang="scss">
+  .home {
+    .van-swipe {
+      height: 4rem;
+      border-radius: 0.266666rem;
+      overflow: hidden;
+      margin: 0.266666rem 0.32rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .van-swipe__indicator {
+      height: 0;
+      width: 0.32rem;
+      background-color: $white-color;
+      border-bottom: 2px solid $white-color;
+    }
+
+    .van-swipe__indicator--active {
+      height: 0;
+      width: 0.32rem;
+      background-color: $main-color;
+      border-bottom: 2px solid $main-color;
+    }
+
+    .gift_img {
+      min-height: 1.933333rem;
+      margin: 0 0.4rem;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .goods_list {
+      margin: 0 0.32rem;
+
+      .goods_img {
+        min-height: 3.306666rem;
+
+        img {
+          width: 100%;
+        }
+      }
+      .goods_item{
+        margin-bottom: 0.4rem;
+      }
+      .price {
+        font-size: 20px;
+        font-weight: bold;
+        color: $gold-color;
+      }
+
+      .descript {
+        font-size: 16px;
+        color: $black-color;
+      }
+    }
+  }
 </style>

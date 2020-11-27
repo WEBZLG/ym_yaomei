@@ -55,7 +55,7 @@
       <!-- 海报升级 -->
       <div class="poster_box">
         <div class="img_box"><img src="../../../static/image/mine/haibao_img.png" alt=""></div>
-        <div class="img_box"><img src="../../../static/image/mine/shengji_img.png" alt=""></div>
+        <div class="img_box" @click="onUpgrade"><img src="../../../static/image/mine/shengji_img.png" alt=""></div>
       </div>
 
       <!-- 列表 -->
@@ -102,7 +102,7 @@
           }, {
             icon_url: require('../../../static/image/mine/coin_ico.png'),
             title: '收益明细',
-            link: ''
+            link: '/income_list'
           },
           {
             icon_url: require('../../../static/image/mine/kucun_icon.png'),
@@ -117,7 +117,7 @@
           {
             icon_url: require('../../../static/image/mine/serves_icon.png'),
             title: '客服服务',
-            link: ''
+            link: '/service'
           }
         ]
       }
@@ -157,6 +157,9 @@
       // 提现记录
       onWithdrawalList() {
         this.$router.push('/withdrawal_list')
+      },
+      onUpgrade(){
+        this.$router.push('/upgrade')
       },
       // // 请求数据案例
       // initData() {

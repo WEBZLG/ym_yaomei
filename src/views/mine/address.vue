@@ -39,6 +39,7 @@
       },
       onEdit(e){
         console.log(e)
+        this.$router.push('/add_address')
       },
       onAdd(e){
         this.$router.push('/add_address')

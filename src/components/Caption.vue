@@ -43,6 +43,9 @@
       width: 0.453333rem;
       border: 50%;
       overflow: hidden;
+      img{
+        width: 100%;
+      }
     }
   }
 </style>

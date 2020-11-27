@@ -56,7 +56,7 @@
             title: '修改手机号',
             link: '/changePhone',
             value:'',
-            event: ''
+            event: 'onDefault'
           },
           {
             title: '推荐人',
@@ -74,13 +74,13 @@
             title: '用户协议',
             link: '/changePhone',
             value:'',
-            event: 'onShowRecommender'
+            event: 'onDefault'
           },
           {
             title: '关于我们',
             link: '/changePhone',
             value:'',
-            event: 'onShowRecommender'
+            event: 'onDefault'
           }
         ]
       }
@@ -95,6 +95,9 @@
       // 退出
       onExit() {
         console.log('tui')
+      },
+      onDefault(){
+
       },
       // 函数转接
       clkCall(methodsWords) {
