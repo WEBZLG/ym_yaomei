@@ -30,3 +30,31 @@ export function getUserName(params) {
     hideloading: true
   })
 }
+// 首页banner
+export function getBanner(params) {
+  return request({
+    url: api.HomeBanner,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+// 首页商品
+export function yaomeiIndex(params) {
+  return request({
+    url: api.YaomeiIndex,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+// 首页商品
+export function goodsInfo(params) {
+  return request({
+    url: api.GoodsInfo,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+

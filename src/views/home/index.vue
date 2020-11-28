@@ -4,14 +4,14 @@
     <van-nav-bar fixed title="首页" z-index="99" left-arrow @click-left="onClickLeft" />
     <div>
       <van-swipe :autoplay="3000">
-        <van-swipe-item v-for="(image, index) in images" :key="index">
-          <img v-lazy="image" />
+        <van-swipe-item v-for="(item, index) in bannerData.banner" :key="index">
+          <img v-lazy="item.thumb" />
         </van-swipe-item>
       </van-swipe>
-      <div class="gift_img" @click="onGift"><img src="../../../static/image/home/gift_img.png" alt=""></div>
-      <Caption content='代理商品' @click="onView"></Caption>
+      <div class="gift_img" @click="onGift"><img :src="bannerData.giftimg" alt=""></div>
+      <Caption :content='bannerData.categoryname' @click="onView"></Caption>
       <div class="goods_list">
-        <Goods @onclick="onDetail"></Goods>
+        <Goods v-for="(item,index) in indexData" :key="index" :content="item" @onclick="onDetail"></Goods>
       </div>
     </div>
   </div>
@@ -20,13 +20,20 @@
 <script>
   import Goods from '@/components/Goods'
   import Caption from '@/components/Caption'
+  // 请求接口
+  import {
+    getBanner,
+    yaomeiIndex,
+    goodsInfo
+  } from '@/api/user.js'
+import {
+    Toast
+  } from 'vant';
   export default {
     data() {
       return {
-        images: [
-          'https://img.yzcdn.cn/vant/apple-1.jpg',
-          'https://img.yzcdn.cn/vant/apple-2.jpg',
-        ],
+        bannerData:'',
+        indexData:''
       }
     },
 
@@ -34,7 +41,10 @@
       Caption,
       Goods
     },
-    mounted() {},
+    mounted() {
+      this.getBanner();
+      this.getIndex();
+    },
 
     methods: {
       onClickLeft() {
@@ -43,12 +53,37 @@
       onGift(){
         this.$router.push('/gift_bag')
       },
-      onDetail(){
-        console.log(123)
-        this.$router.push('/goods_detail')
+      onDetail(value){
+        console.log(value)
+        this.$router.push({
+            path: '/goods_detail',
+            query: {
+              id: value
+            }
+          })
       },
       onView(){
 
+      },
+      // 轮播
+      getBanner(){
+        getBanner().then((res) => {
+            console.log(res)
+            this.bannerData = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
+      },
+      // 首页商品
+      getIndex(){
+        yaomeiIndex().then((res) => {
+            console.log(res)
+            this.indexData = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
       }
     }
   }

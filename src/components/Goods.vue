@@ -1,9 +1,9 @@
 <template>
-  <div class="goods" @click="handleClick">
+  <div class="goods" @click="handleClick(content.id)">
       <div class="goods_item">
-        <div class="goods_img"><img src="../../static/image/mine/cdkey_bg.png" alt=""></div>
-        <div class="price">￥888</div>
-        <div class="descript">【补水紧致亮白】巴拉巴拉一大堆</div>
+        <div class="goods_img"><img :src="content.thumb" alt=""></div>
+        <div class="price">￥{{content.money}}</div>
+        <div class="descript">{{content.name}}</div>
       </div>
   </div>
 </template>
@@ -13,7 +13,7 @@
     name: 'Caption',
     props: {
       content: {
-        type: String,
+        type: Object,
         default: ''
       }
     },
@@ -33,10 +33,11 @@
 <style scoped="scoped" lang="scss">
   .goods {
       .goods_img {
-        min-height: 3.306666rem;
+       height: 3.306666rem;
 
         img {
           width: 100%;
+          height: 100%;
         }
       }
       .goods_item{

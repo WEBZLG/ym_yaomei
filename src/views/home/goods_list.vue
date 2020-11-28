@@ -1,6 +1,6 @@
 <template>
   <div class="goods_list">
-    <van-nav-bar fixed title="鍟嗗搧鍒楄〃" z-index="99" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar fixed title="商品列表" z-index="99" left-arrow @click-left="onClickLeft" />
     <div>
       <Goods></Goods>
     </div>
