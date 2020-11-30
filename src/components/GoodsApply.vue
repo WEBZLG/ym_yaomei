@@ -11,7 +11,7 @@
       <h3 class="title">{{content.name}}</h3>
       <div>￥<span>{{content.money}}</span></div>
       <div class="text_right">
-        <div class="btn_apply" @click="onClick"><img src="../../static/image/mine/apply_img.png" alt=""></div>
+        <div class="btn_apply" @click="onClick(content.id)"><img src="../../static/image/mine/apply_img.png" alt=""></div>
       </div>
     </div>
   </div>
@@ -46,6 +46,7 @@
     padding: 0.4rem 0.32rem;
     border-bottom: 1px solid #f5f5f5;
     .parameter{
+      flex: 1;
       line-height: 22px;
       margin-left: 0.32rem;
     }
@@ -54,7 +55,7 @@
       color: $black-color;
       font-weight: bold;
       margin: 0;
-      min-height: 0.48rem;
+      min-height: 1.173333rem;
       @include textoverflow($clamp: 2);
     }
 

@@ -2,7 +2,7 @@
   <div class="goods_stock">
     <van-nav-bar fixed title="商品库存" z-index="99" left-arrow @click-left="onClickLeft" />
     <div>
-      <GoodsInfo :content="content" @onclick="onStock"></GoodsInfo>
+      <GoodsInfo v-for="(item,index) in dataList" :key="index" :content="item" @onclick="onStock"></GoodsInfo>
     </div>
   </div>
 </template>
@@ -12,16 +12,18 @@
   import {
     Toast
   } from 'vant';
+  // 请求接口
+  import {
+    goodsStock
+  } from '@/api/user.js'
   export default {
     data() {
       return {
-        content: {
-          name: '测试案例测试案例测试案例测试案例测试案例测试案例测试案例',
-          thumb: "https://img.yzcdn.cn/vant/cat.jpeg",
-          money: "88.00",
-          stock:'33'
-        },
+        dataList:[],
       }
+    },
+    mounted() {
+      this.initData()
     },
     components: {
       GoodsInfo
@@ -33,6 +35,19 @@
       onStock(){
         console.log(12)
         // this.$router.push('/goods_apply_submit')
+      },
+      initData(){
+       const params = {
+         uid: '2'
+       }
+       goodsStock(params)
+         .then((res) => {
+           console.log(res)
+           this.dataList = res.data
+         })
+         .catch((err) => {
+           Toast(err.msg)
+         })
       }
     }
   }

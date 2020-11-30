@@ -1,6 +1,6 @@
 // 按需全局引入 vant组件
 import Vue from 'vue'
-import {Uploader,Stepper,Swipe,SwipeItem,Checkbox, CheckboxGroup,Popup,Area,Picker,Overlay,Radio,RadioGroup,Loading,Lazyload,NavBar,Button,Toast,Field, List,  Cell, CellGroup, Tabbar, TabbarItem,Image as VanImage, Tab, Tabs} from 'vant'
+import {PullRefresh,Uploader,Stepper,Swipe,SwipeItem,Checkbox, CheckboxGroup,Popup,Area,Picker,Overlay,Radio,RadioGroup,Loading,Lazyload,NavBar,Button,Toast,Field, List,  Cell, CellGroup, Tabbar, TabbarItem,Image as VanImage, Tab, Tabs} from 'vant'
 Vue.use(Button)
 Vue.use(Cell)
 Vue.use(List)
@@ -25,4 +25,5 @@ Vue.use(Swipe);
 Vue.use(Stepper);
 Vue.use(SwipeItem);
 Vue.use(Uploader);
-Vue.use(Tabbar).use(TabbarItem)
+Vue.use(PullRefresh);
+Vue.use(Tabbar).use(TabbarItem);

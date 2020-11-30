@@ -1,39 +1,39 @@
 <template>
   <div class="goods_item">
     <div class="order_status">
-      <div class="order">订单编号：{{content.order_num}}</div>
-      <div v-if="content.status=='待付款'" class="status red">待付款</div>
-      <div v-if="content.status=='待配送'" class="status orange">待配送</div>
-      <div v-if="content.status=='待签收'" class="status green">待签收</div>
-      <div v-if="content.status=='已完成'" class="status blue">已完成</div>
+      <div class="order">订单编号：{{content.order_id}}</div>
+      <div v-if="content.status=='0'" class="status red">待付款</div>
+      <div v-if="content.status=='1'" class="status orange">待配送</div>
+      <div v-if="content.status=='2'" class="status green">待签收</div>
+      <div v-if="content.status=='6'" class="status blue">已完成</div>
     </div>
-    <div class="goodsInfo" @click="haneleDetail(content.id)">
+    <div class="goodsInfo" @click="haneleDetail(content.goods.id)">
       <div>
-        <van-image height="100" width="100" lazy-load :src="content.thumb">
+        <van-image height="100" width="100" lazy-load :src="content.goods.thumb">
           <template v-slot:loading>
             <van-loading type="spinner" size="20" />
           </template>
         </van-image>
       </div>
       <div class="parameter">
-        <h3 class="title">{{content.name}}</h3>
-        <div>￥<span>{{content.money}}</span></div>
-        <div>规格：<span>{{content.size_name}}</span></div>
+        <h3 class="title">{{content.goods.name}}</h3>
+        <div>￥<span>{{content.goods.money}}</span></div>
+        <div>规格：<span>{{content.goods.defaultsize}}</span></div>
         <div>数量：<span>{{content.buy_num}}</span></div>
       </div>
     </div>
     <div class="cost">
-      <div>共{{content.number}}件</div>
-      <div>快递费用：￥{{content.post_num}}</div>
-      <div>合计：￥{{content.total}}</div>
+      <div>共{{content.buy_num}}件</div>
+      <div>快递费用：{{content.postage=="0"?"免运费":"'￥"+content.postage}}</div>
+      <div>合计：￥{{content.money}}</div>
     </div>
     <div class="btn_box">
-      <div class="btn" v-if="content.status=='待付款'" @click="handleAction('dfk',content.id)"><img src="../../static/image/mine/pay_img.png" alt=""></div>
-      <div class="btn" v-if="content.status=='待付款'" @click="handleAction('qxdd',content.id)"><img src="../../static/image/mine/cancel_img.png" alt=""></div>
-      <div class="btn" v-if="content.status=='待配送'||content.status=='已完成'" @click="handleAction('ckdd',content.id)"><img src="../../static/image/mine/view_order.png"
+      <div class="btn" v-if="content.status=='0'" @click="handleAction('dfk',content.id)"><img src="../../static/image/mine/pay_img.png" alt=""></div>
+      <div class="btn" v-if="content.status=='0'" @click="handleAction('qxdd',content.id)"><img src="../../static/image/mine/cancel_img.png" alt=""></div>
+      <div class="btn" v-if="content.status=='1'||content.status=='6'" @click="handleAction('ckdd',content.id)"><img src="../../static/image/mine/view_order.png"
           alt=""></div>
-      <div class="btn" v-if="content.status=='待签收'" @click="handleAction('qrsh',content.id)"><img src="../../static/image/mine/shouhuo_img.png" alt=""></div>
-      <div class="btn" v-if="content.status=='待签收'" @click="handleAction('ckwl',content.id)"><img src="../../static/image/mine/wuliu_img.png" alt=""></div>
+      <div class="btn" v-if="content.status=='2'" @click="handleAction('qrsh',content.id)"><img src="../../static/image/mine/shouhuo_img.png" alt=""></div>
+      <div class="btn" v-if="content.status=='2'" @click="handleAction('ckwl',content.id)"><img src="../../static/image/mine/wuliu_img.png" alt=""></div>
     </div>
   </div>
 </template>
@@ -111,6 +111,7 @@
       padding: 0.4rem 0.32rem;
 
       .parameter {
+        flex:1;
         line-height: 22px;
         margin-left: 0.32rem;
       }

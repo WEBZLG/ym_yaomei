@@ -3,11 +3,11 @@
     <van-nav-bar fixed title="补货记录" z-index="99" left-arrow @click-left="onClickLeft" />
     <!-- 标签栏 -->
     <van-tabs v-model="active" color="#395467" swipe-threshold="6" sticky title-inactive-color="#282828"
-      title-active-color="#3a576a">
+      title-active-color="#3a576a" @click="onTabs">
       <van-tab v-for="(item,index) in tabList" :title="item" :key='index'></van-tab>
     </van-tabs>
     <div>
-      <GoodsReplenish :content='content' @action="onAction" @detail="onDetail"></GoodsReplenish>
+      <GoodsReplenish  v-for="(item,index) in dataList" :key='index' :content='item' @action="onAction" @detail="onDetail"></GoodsReplenish>
     </div>
   </div>
 </template>
@@ -17,28 +17,21 @@
   import {
     Toast
   } from 'vant';
+  // 请求接口
+  import {
+    replenishList
+  } from '@/api/user.js'
   export default {
     data() {
       return {
         active: 0,
         tabList: ['待审核', '已审核', '已驳回', '已预期'],
-        content: {
-          name: '测试案例测试案例测试案例测试案例测试案例测试案例测试案例',
-          thumb: "https://img.yzcdn.cn/vant/cat.jpeg",
-          money: "88.00",
-          size_name: '10g/片',
-          buy_num: '66',
-          order_num:'34567890',
-          status:'待付款',
-          total:'888',
-          time:'2020-11-11',
-          number:'333',
-          id:12
-        },
+        dataList:[],
       }
     },
     mounted() {
       this.active = this.$route.query.active
+      this.initData(0)
     },
     components:{
       GoodsReplenish
@@ -52,7 +45,25 @@
       },
       onDetail(){
         console.log('详情')
-      }
+      },
+      onTabs(e){
+        console.log(e)
+         this.initData(e)
+      },
+      initData(status) {
+        const params = {
+          uid: '2',
+          status:status
+        }
+        replenishList(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
+      },
     }
   }
 </script>

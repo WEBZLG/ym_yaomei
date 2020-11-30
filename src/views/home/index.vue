@@ -1,7 +1,7 @@
 <!-- home -->
 <template>
   <div class="home">
-    <van-nav-bar fixed title="首页" z-index="99" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar fixed title="首页" z-index="99" />
     <div>
       <van-swipe :autoplay="3000">
         <van-swipe-item v-for="(item, index) in bannerData.banner" :key="index">
@@ -47,9 +47,6 @@ import {
     },
 
     methods: {
-      onClickLeft() {
-        this.$router.go(-1)
-      },
       onGift(){
         this.$router.push('/gift_bag')
       },

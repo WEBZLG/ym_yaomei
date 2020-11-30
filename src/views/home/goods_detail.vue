@@ -32,15 +32,15 @@
     <!-- 购买弹出 -->
     <van-popup v-model="popShow" closeable position="bottom" :style="{ height: '40%' }">
       <div class="pop_flex">
-        <van-image width="133" height="133" lazy-load src="https://img.yzcdn.cn/vant/cat.jpeg" />
+        <van-image width="133" height="133" lazy-load :src="goodsData.thumb" />
         <div class="pop_content">
-          <h3 class="pop_title">啦啦啦拉拉阿拉巴巴吧</h3>
-          <div class="price">￥666</div>
+          <h3 class="pop_title">{{goodsData.name}}</h3>
+          <div class="price">￥{{goodsData.money}}</div>
           <div class="pop_num">
             <div>购买数量：</div>
-            <van-stepper v-model="number" min="1" max="8" />
+            <van-stepper v-model="number" :min="goodsData.siglebuyleast" :max="goodsData.siglebuymax" />
           </div>
-          <div>库存数量：333</div>
+          <div>库存数量：{{goodsData.stock}}</div>
         </div>
       </div>
         <div><BtnImg :src="src"></BtnImg></div>
@@ -64,7 +64,7 @@
         current: 0,
         goodsData: '',
         totalLength: 0,
-        popShow: true,
+        popShow: false,
         number:1
       }
     },
@@ -154,7 +154,7 @@
 
     .pop_flex {
       @include flexbox($jc: '', $ai:top);
-      padding: 1.066666rem 0.32rem 0;
+      padding: 1.066666rem 0.32rem 0.373333rem;
       .pop_content {
         flex: 1;
         margin-left: 0.32rem;

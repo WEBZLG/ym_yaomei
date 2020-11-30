@@ -8,9 +8,9 @@
       </van-image>
     </div>
     <div class="parameter">
-      <h3 class="title">{{content.name}}</h3>
-      <div>补货时间：<span>{{content.time}}</span></div>
-      <div>补货数量：<span>{{content.number}}</span></div>
+      <h3 class="title">{{content.goodsname}}</h3>
+      <div>补货时间：<span>{{content.createtime}}</span></div>
+      <div>补货数量：<span>{{content.stock_num}}</span></div>
     </div>
   </div>
 </template>
@@ -44,6 +44,7 @@
     padding: 0.4rem 0.32rem;
     border-bottom: 1px solid #f5f5f5;
     .parameter{
+      flex: 1;
       line-height: 22px;
       margin-left: 0.32rem;
     }
@@ -52,7 +53,7 @@
       color: $black-color;
       font-weight: bold;
       margin: 0;
-      min-height: 0.48rem;
+      min-height: 1.173333rem;
       @include textoverflow($clamp: 2);
     }
 

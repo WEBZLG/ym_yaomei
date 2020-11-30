@@ -6,14 +6,17 @@
     <div class="banner">
       <div class="sys-box">
         <div class="sys_icon"  @click="onSystem"><img src="../../../static/image/mine/sys_icon.png" alt=""></div>
-        <div class="info_icon" @click="onMessage"><img src="../../../static/image/mine/info_icon.png" alt=""></div>
+        <div class="info_icon" @click="onMessage">
+          <img src="../../../static/image/mine/info_icon.png" alt="">
+          <Dot :content="messageDot"></Dot>
+         </div>
       </div>
       <div class="user_info">
-        <van-image width="62" height="62" round fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+        <van-image width="62" height="62" round fit="cover" :src="dataList.avatar" />
         <div class="user_box">
-          <div class="name">用户昵称 <span class="user_level"><img src="../../../static/image/mine/user_level0.png" alt=""></span></div>
+          <div class="name">{{dataList.nickname}} <span class="user_level"><img :src="dataList.group" alt=""></span></div>
           <div class="code">邀请码:
-            <span>FG1234G</span>
+            <span>{{dataList.invite_code}}</span>
             <span class="copy-btn">复制</span>
           </div>
         </div>
@@ -25,26 +28,30 @@
         <div @click="onWait(1)">
           <van-image width="28" height="29" fit="cover" :src="navIcon[0]" />
           <div>待付款</div>
+          <Dot :content="{type:1,num:dataList.reddot_dfk}"></Dot>
         </div>
         <div @click="onWait(2)">
           <van-image width="34" height="29" fit="cover" :src="navIcon[1]" />
           <div>待配送</div>
+          <Dot :content="{type:1,num:dataList.reddot_dps}"></Dot>
         </div>
         <div @click="onWait(3)">
           <van-image width="28" height="29" fit="cover" :src="navIcon[2]" />
           <div>待签收</div>
+          <Dot :content="{type:1,num:dataList.reddot_dqs}"></Dot>
         </div>
         <div @click="onWait(4)">
           <van-image width="25" height="29" fit="cover" :src="navIcon[3]" />
           <div>已完成</div>
+          <Dot :content="{type:1,num:dataList.reddot_ywc}"></Dot>
         </div>
       </div>
       <!-- 账户情况 -->
       <div class="my_count">
         <div class="my_money">
           <div class="caption">我的余额</div>
-          <div class="money">￥0.00</div>
-          <div class="total">累计收益：￥888888</div>
+          <div class="money">￥{{dataList.money}}</div>
+          <div class="total">累计收益：￥{{dataList.income}}</div>
         </div>
         <div class="submit_box">
           <div class="btn tx_btn" @click="onWithdrawal">立即提现</div>
@@ -74,9 +81,10 @@
 
 <script>
   import Footer from '@/components/Footer'
+  import Dot from '@/components/Dot'
   // 请求接口
   import {
-    getUserInfo
+    userInfo
   } from '@/api/user.js'
   import {
     mapGetters
@@ -84,6 +92,10 @@
   export default {
     data() {
       return {
+        dataList:'',
+        messageDot:{
+          type:0
+        },
         navIcon: [
           require('../../../static/image/mine/dfk_icon.png'),
           require('../../../static/image/mine/dps_icon.png'),
@@ -126,10 +138,11 @@
       ...mapGetters(['userName'])
     },
     components: {
-      Footer
+      Footer,
+      Dot
     },
     mounted() {
-      // this.initData()
+      this.initData()
     },
     methods: {
       // 订单状态导航
@@ -161,16 +174,20 @@
       onUpgrade(){
         this.$router.push('/upgrade')
       },
-      // // 请求数据案例
-      // initData() {
-      //   // 请求接口数据，仅作为展示，需要配置src->config下环境文件
-      //   const params = {
-      //     user: 'sunnie'
-      //   }
-      //   getUserInfo(params)
-      //     .then(() => {})
-      //     .catch(() => {})
-      // },
+      // 请求数据
+      initData() {
+        const params = {
+          uid: '2'
+        }
+        userInfo(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
+      },
       // // Action 通过 store.dispatch 方法触发
       // doDispatch() {
       //   this.$store.dispatch('setUserName', '12313')
@@ -242,6 +259,7 @@
       .sys_icon {
         width: 0.466666rem;
         height: 0.506666rem;
+        position: relative;
       }
 
       .sys_icon {
@@ -252,6 +270,9 @@
   }
 
   .order_nav {
+    > div{
+      position: relative;
+    }
     height: 2.506666rem;
     @include flexbox($jc: space-between) text-align: center;
     margin: -0.586666rem 0.133333rem 0;

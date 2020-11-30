@@ -29,14 +29,14 @@
     <!-- 列表 -->
     <Caption content="出货记录" @click="onMore"></Caption>
     <div class="list">
-        <div class="list_item">
-          <div class="head"><img src="../../assets/logo.png" alt=""></div>
+        <div class="list_item" v-for="(item,index) in dataList" :key="index">
+          <div class="head"><img :src="item.avatar" alt=""></div>
           <div class="content">
-              <div>用户昵称：</div>
-              <div>商品名称：</div>
-              <div>出货数量：</div>
-              <div>出货状态：</div>
-              <div>申请时间：</div>
+              <div>用户昵称：{{item.nickname}}</div>
+              <div>商品名称：{{item.goodsname}}</div>
+              <div>出货数量：{{item.sender}}</div>
+              <div>出货状态：{{item.statusname}}</div>
+              <div>申请时间：{{item.createtime}}</div>
           </div>
         </div>
     </div>
@@ -46,11 +46,19 @@
 
 <script>
   import Caption from '@/components/Caption'
+  // 请求接口
+  import {
+    shipmentListhome
+  } from '@/api/user.js'
   export default {
     data() {
       return {
-        tabList: ['订单消息', '晋级消息', '返润消息', '系统消息']
+        tabList: ['订单消息', '晋级消息', '返润消息', '系统消息'],
+        dataList:[]
       }
+    },
+    mounted() {
+        this.initData()
     },
     methods: {
       onMore() {
@@ -70,12 +78,28 @@
       },
       onView(){
         this.$router.push('/my_cdkey')
-      }
+      },
+      // 请求数据
+      initData() {
+        const params = {
+          uid: '2'
+        }
+        shipmentListhome(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
+      },
+
 
     },
     components: {
       Caption
     },
+
   }
 </script>
 
