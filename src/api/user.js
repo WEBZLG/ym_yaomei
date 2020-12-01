@@ -147,3 +147,120 @@ export function buyCdkey(params) {
     hideloading: true
   })
 }
+//我的地址
+export function myAddress(params) {
+  return request({
+    url: api.MyAddress,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//添加地址
+export function addressInc(params) {
+  return request({
+    url: api.AddressInc,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//编辑地址
+export function addressEdit(params) {
+  return request({
+    url: api.AddressEdit,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//删除地址
+export function addressDel(params) {
+  return request({
+    url: api.AddressDel,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//推荐人弹窗
+export function seeReferrer(params) {
+  return request({
+    url: api.SeeReferrer,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//体现记录
+export function withdrawalRecord(params) {
+  return request({
+    url: api.WithdrawalRecord,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//消息列表
+export function userMessage(params) {
+  return request({
+    url: api.UserMessage,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//收益明细
+export function userProfit(params) {
+  return request({
+    url: api.UserProfit,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//在线升级
+export function upLevelpage(params) {
+  return request({
+    url: api.UpLevelpage,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//确认收货
+export function confirmReceipt(params) {
+  return request({
+    url: api.ConfirmReceipt,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//取消订单
+export function orderCancel(params) {
+  return request({
+    url: api.OrderCancel,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//判断支付方式
+export function payRetnow(params) {
+  return request({
+    url: api.PayRetnow,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//微信支付
+export function goPay(params) {
+  return request({
+    url: api.GoPay,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}

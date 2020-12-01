@@ -13,20 +13,41 @@
   import {
     Toast
   } from 'vant';
+ // 请求接口
+ import {
+   upLevelpage
+ } from '@/api/user.js'
   export default {
     data() {
       return {
-
+        dataList:''
       }
     },
     components:{
 
     },
+    mounted() {
+      this.initData()
+    },
     methods: {
       onClickLeft() {
         this.$router.go(-1)
       },
-    }
+      // 请求数据
+      initData() {
+        const params = {
+          uid: '2'
+        }
+        upLevelpage(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
+      },
+    },
   }
 </script>
 

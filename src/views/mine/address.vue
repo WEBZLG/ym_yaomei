@@ -2,7 +2,7 @@
   <div class="address">
     <van-nav-bar fixed title="收货地址" z-index="99" left-arrow @click-left="onClickLeft" />
     <div class="container">
-      <Address :content="content" @click="onEdit"></Address>
+      <Address v-for="(item,index) in dataList" :key="index" :content="item" @click="onEdit(item)"></Address>
       <div class="fixed">
          <BtnImg :src="src" @onclick="onAdd"></BtnImg>
       </div>
@@ -16,18 +16,19 @@
   import {
     Toast
   } from 'vant';
+  // 请求接口
+  import {
+    myAddress
+  } from '@/api/user.js'
   export default {
     data() {
       return {
         src: require('../../../static/image/mine/add_address.png'),
-        content:{
-          id:0,
-          name:'张三',
-          mobile:'123456',
-          address:'哈尔滨南岗区',
-          isChecked:true
-        }
+        dataList:[],
       }
+    },
+    mounted() {
+      this.initData()
     },
     components:{
       Address,
@@ -38,12 +39,25 @@
         this.$router.go(-1)
       },
       onEdit(e){
-        console.log(e)
-        this.$router.push('/add_address')
+        this.$router.push({path:'/add_address',query:{data:e}})
       },
       onAdd(e){
         this.$router.push('/add_address')
-      }
+      },
+      // 请求数据
+      initData() {
+        const params = {
+          uid: '2'
+        }
+        myAddress(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
+      },
     }
   }
 </script>

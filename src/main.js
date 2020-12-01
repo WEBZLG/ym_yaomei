@@ -7,11 +7,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import clipboard from 'clipboard';
 // 设置 js中可以访问 $cdn
 import { $cdn } from '@/config'
 Vue.prototype.$cdn = $cdn
-
+Vue.prototype.clipboard = clipboard;
 // 全局引入按需引入UI库 vant
 import '@/plugins/vant'
 // 引入全局样式

@@ -17,7 +17,7 @@
           <div class="name">{{dataList.nickname}} <span class="user_level"><img :src="dataList.group" alt=""></span></div>
           <div class="code">邀请码:
             <span>{{dataList.invite_code}}</span>
-            <span class="copy-btn">复制</span>
+            <span class="copy-btn" :data-clipboard-text="dataList.invite_code"  @click="onCopy">复制</span>
           </div>
         </div>
       </div>
@@ -82,6 +82,9 @@
 <script>
   import Footer from '@/components/Footer'
   import Dot from '@/components/Dot'
+  import {
+    Toast
+  } from 'vant';
   // 请求接口
   import {
     userInfo
@@ -174,6 +177,15 @@
       onUpgrade(){
         this.$router.push('/upgrade')
       },
+       onCopy() {
+           let clipboard = new this.clipboard(".copy-btn");
+           clipboard.on('success', function () {
+             Toast("复制成功")
+           });
+           clipboard.on('error', function () {
+            Toast("复制失败")
+           });
+       },
       // 请求数据
       initData() {
         const params = {

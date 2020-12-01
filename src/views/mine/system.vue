@@ -13,15 +13,15 @@
     <!-- 推荐人弹窗 -->
     <van-overlay :show="recommenderShow" @click="recommenderShow = false">
       <div class="wrapper" @click.stop>
-        <van-image height="56" width="56" round src="https://img.yzcdn.cn/vant/cat.jpeg">
+        <van-image height="56" width="56" round :src="dataList.avatar">
           <template v-slot:loading>
             <van-loading type="spinner" size="20" />
           </template>
         </van-image>
           <h3 class="pop_title">推荐人</h3>
-          <div>用户昵称</div>
-          <div>等级：普通用户</div>
-          <div class="pop_mobile">手机号：18845729909</div>
+          <div>{{dataList.nickname}}</div>
+          <div>等级：{{dataList.group_name}}</div>
+          <div class="pop_mobile">手机号：{{dataList.mobile}}</div>
           <div class="pop_btn" @click="recommenderShow = false">
               <img src="../../../static/image/mine/pop_btn.png" alt="">
           </div>
@@ -46,12 +46,17 @@
   import {
     Toast
   } from 'vant';
+  // 请求接口
+  import {
+    seeReferrer
+  } from '@/api/user.js'
   export default {
     data() {
       return {
         recommenderShow:false,
         wechatShow:false,
         src: require('../../../static/image/mine/exit_img.png'),
+        dataList:[],
         navList: [{
             title: '修改手机号',
             link: '/changePhone',
@@ -85,6 +90,9 @@
         ]
       }
     },
+    mounted() {
+      this.initData()
+    },
     components: {
       BtnImg
     },
@@ -110,7 +118,21 @@
       // 绑定微信
       onShowWechat(){
         this.wechatShow=true
-      }
+      },
+      // 请求数据
+      initData() {
+        const params = {
+          uid: '2'
+        }
+        seeReferrer(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
+      },
     }
   }
 </script>

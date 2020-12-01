@@ -198,16 +198,15 @@
       },
       // 复制邀请码
       handleCopyClick(id) {
-        var clipboard = new ClipboardJS('.copybtn' + id)
+        let clipboard = new this.clipboard('.copybtn' + id);
         //成功回调
         clipboard.on('success', function(e) {
-
+          Toast('复制成功');
           e.clearSelection()
         });
         //失败回调
         clipboard.on('error', function(e) {
-          vant.Toast.fail('复制失败');
-
+          Toast('复制失败');
         });
       },
       // 补卡

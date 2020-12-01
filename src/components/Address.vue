@@ -5,10 +5,10 @@
 			<div>{{content.mobile}}</div>
 		</div>
     <div class="flex area">
-      <div>{{content.address}}</div>
+      <div>{{content.region+ content.city+ content.xian+ content.address}}</div>
       <div class="right_raw"><img src="../../static/image/mine/right_raw.png" alt=""></div>
     </div>
-    <div class="checked" v-if="content.isChecked==true">
+    <div class="checked" v-if="content.status==1">
       <span class="checked_icon"><img src="../../static/image/mine/cheecked_.png" alt=""></span>
       <span class="checked_text">默认地址</span>
     </div>
@@ -43,6 +43,7 @@
     // @include flexbox;
     padding:0.32rem 0;
     border-radius: 0.133333rem;
+    margin-bottom: 0.266666rem;
     .name {
       font-size: $font-size14;
       color: $black-color;

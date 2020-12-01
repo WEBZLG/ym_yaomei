@@ -2,7 +2,7 @@
   "name": "vue-h5-template",
   "version": "2.0.0",
   "description": "A vue h5 template with Vant UI",
-  "author": "Sunnie <sunniejs@163.com>",
+  "author": "Honor <webzlg@163.com>",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "clipboard": "^2.0.6",
     "core-js": "^3.6.4",
     "lib-flexible": "^0.3.2",
     "lodash": "^4.17.15",

@@ -14,7 +14,20 @@ const api = {
   ReplenishList:'/replenishList',
   ShipmentListhome:'/shipmentListhome',
   CdkeyList:'/cdkeyList',
-  BuyCdkey:'/buyCdkey'
+  BuyCdkey:'/buyCdkey',
+  MyAddress:'/myAddress',
+  AddressInc:'/addressInc',
+  AddressEdit:'/addressEdit',
+  AddressDel:'/addressDel',
+  SeeReferrer:'/seeReferrer',
+  WithdrawalRecord:'/withdrawalRecord',
+  UserMessage:'/userMessage',
+  UserProfit:'/userProfit',
+  UpLevelpage:'/upLevelpage',
+  ConfirmReceipt:'/confirmReceipt',
+  OrderCancel:'/orderCancel',
+  PayRetnow:'/payRetnow',
+  GoPay:'/goPay'
 }
 
 export default api

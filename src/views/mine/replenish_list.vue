@@ -2,13 +2,14 @@
   <div class="replenish_list">
     <van-nav-bar fixed title="补货记录" z-index="99" left-arrow @click-left="onClickLeft" />
     <!-- 标签栏 -->
-    <van-tabs v-model="active" color="#395467" swipe-threshold="6" sticky title-inactive-color="#282828"
+    <van-tabs v-model="active" color="#395467" swipe-threshold="6" sticky :offset-top="46" title-inactive-color="#282828"
       title-active-color="#3a576a" @click="onTabs">
-      <van-tab v-for="(item,index) in tabList" :title="item" :key='index'></van-tab>
+      <van-tab v-for="(item,index) in tabList" :title="item" :key='index'>
+        <div>
+          <GoodsReplenish  v-for="(item,index) in dataList" :key='index' :content='item' @action="onAction" @detail="onDetail"></GoodsReplenish>
+        </div>
+      </van-tab>
     </van-tabs>
-    <div>
-      <GoodsReplenish  v-for="(item,index) in dataList" :key='index' :content='item' @action="onAction" @detail="onDetail"></GoodsReplenish>
-    </div>
   </div>
 </template>
 
@@ -55,6 +56,7 @@
           uid: '2',
           status:status
         }
+        
         replenishList(params)
           .then((res) => {
             console.log(res)
