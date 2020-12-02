@@ -43,7 +43,7 @@
           <div>库存数量：{{goodsData.stock}}</div>
         </div>
       </div>
-        <div><BtnImg :src="src"></BtnImg></div>
+        <div><BtnImg :src="src" @onclick="onSubmit"></BtnImg></div>
     </van-popup>
   </div>
 </template>
@@ -70,7 +70,7 @@
     },
     mounted() {
       let id = this.$route.query.id
-      this.getData(id)
+      this.initData(id)
     },
     components: {
       BtnImg
@@ -85,7 +85,10 @@
       onShow(){
         this.popShow = true
       },
-      getData(id) {
+      onSubmit(){
+        this.$router.push({path:'/order_submit',query:{params:this.goodsData,number:this.number}})
+      },
+      initData(id) {
         let param = {
           uid: "2",
           goods_id: id

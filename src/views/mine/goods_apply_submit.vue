@@ -2,7 +2,8 @@
   <div class="goods_apply_submit">
     <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" />
     <div class="banner">
-      <van-swipe @change="onChange">
+      <img :src="dataList" alt="">
+<!--      <van-swipe @change="onChange">
         <van-swipe-item>1</van-swipe-item>
         <van-swipe-item>2</van-swipe-item>
         <van-swipe-item>3</van-swipe-item>
@@ -12,7 +13,7 @@
             {{ current + 1 }}/4
           </div>
         </template>
-      </van-swipe>
+      </van-swipe> -->
     </div>
     <div class="content">
       <van-cell-group>
@@ -52,9 +53,14 @@
   import {
     Toast
   } from 'vant';
+  // 请求接口
+  import {
+    replenishRequest
+  } from '@/api/user.js'
   export default {
     data() {
       return {
+        dataList:'',
         name: '',
         mobile: '',
         value: 1,
@@ -68,12 +74,30 @@
     components: {
       BtnImg
     },
+    mounted() {
+      let id = this.$route.query.id;
+      this.initData(id)
+    },
     methods: {
       onClickLeft() {
         this.$router.go(-1)
       },
       onChange(index) {
         this.current = index;
+      },
+      initData(id) {
+        const params = {
+          uid: '2',
+           goods_id:id
+        }
+        replenishRequest(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
       },
     }
   }
@@ -82,12 +106,13 @@
 <style lang="scss">
   .goods_apply_submit {
     .banner {
-      .van-swipe {
-        height: 6.666666rem;
+      height: 6.666666rem;
         img{
           width: 100%;
           height: 100%;
         }
+      .van-swipe {
+        height: 6.666666rem;
       }
     }
 

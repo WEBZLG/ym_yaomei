@@ -264,3 +264,22 @@ export function goPay(params) {
     hideloading: true
   })
 }
+//补货详情
+export function replenishDetails(params) {
+  return request({
+    url: api.ReplenishDetails,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//补货详情
+export function replenishRequest(params) {
+  return request({
+    url: api.ReplenishRequest,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+

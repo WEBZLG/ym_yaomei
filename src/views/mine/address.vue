@@ -4,7 +4,7 @@
     <div class="container">
       <Address v-for="(item,index) in dataList" :key="index" :content="item" @click="onEdit(item)"></Address>
       <div class="fixed">
-         <BtnImg :src="src" @onclick="onAdd"></BtnImg>
+        <BtnImg :src="src" @onclick="onAdd"></BtnImg>
       </div>
     </div>
   </div>
@@ -24,13 +24,18 @@
     data() {
       return {
         src: require('../../../static/image/mine/add_address.png'),
-        dataList:[],
+        dataList: [],
+        type: ''
       }
     },
     mounted() {
+      let type = this.$route.query.type;
+      if (typeof(type) == 'string') {
+        this.type = type
+      }
       this.initData()
     },
-    components:{
+    components: {
       Address,
       BtnImg
     },
@@ -38,10 +43,22 @@
       onClickLeft() {
         this.$router.go(-1)
       },
-      onEdit(e){
-        this.$router.push({path:'/add_address',query:{data:e}})
+      onEdit(e) {
+          console.log(this.type)
+
+        if (this.type == "order") {
+          this.$storage.set('chooseAddress', e)
+          this.$router.go(-1)
+        } else {
+          this.$router.push({
+            path: '/add_address',
+            query: {
+              data: e
+            }
+          })
+        }
       },
-      onAdd(e){
+      onAdd(e) {
         this.$router.push('/add_address')
       },
       // 请求数据
@@ -63,12 +80,13 @@
 </script>
 
 <style lang="scss">
-.address{
-  .container{
-    margin: 0.32rem;
+  .address {
+    .container {
+      margin: 0.32rem;
+    }
+
+    .flex {
+      @include flexbox()
+    }
   }
-  .flex{
-    @include  flexbox()
-  }
-}
 </style>

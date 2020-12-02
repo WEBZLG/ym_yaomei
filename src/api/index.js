@@ -27,7 +27,9 @@ const api = {
   ConfirmReceipt:'/confirmReceipt',
   OrderCancel:'/orderCancel',
   PayRetnow:'/payRetnow',
-  GoPay:'/goPay'
+  GoPay:'/goPay',
+  ReplenishDetails:'/replenishDetails',
+  ReplenishRequest:'/replenishRequest'
 }
 
 export default api

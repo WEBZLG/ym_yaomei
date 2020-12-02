@@ -45,8 +45,7 @@ service.interceptors.response.use(
       }
       return Promise.reject(res || 'error')
     } else {
-      if(res.code==1) return Promise.resolve(res);
-      else Toast(res.msg);
+      return Promise.resolve(res)
     }
   },
   error => {

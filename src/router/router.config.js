@@ -246,5 +246,22 @@ export const constantRouterMap = [{
       keepAlive: false
     }
   },
+  {
+    path: '/goods_detail',
+    name: 'GoodsDetail',
+    component: () => import('@/views/home/goods_detail'),
+    meta: {
+      title: '商品详情',
+      keepAlive: false
+    }
+  },{
+    path: '/order_submit',
+    name: 'OrderSubmit',
+    component: () => import('@/views/home/order_submit'),
+    meta: {
+      title: '确认订单',
+      keepAlive: false
+    }
+  },
 
 ]

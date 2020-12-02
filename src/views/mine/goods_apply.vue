@@ -21,13 +21,7 @@
     data() {
       return {
         dataList:[],
-        content: {
-          name: '测试案例测试案例测试案例测试案例测试案例测试案例测试案例',
-          thumb: "https://img.yzcdn.cn/vant/cat.jpeg",
-          money: "88.00",
-          size_name: '10g/片',
-          buy_num: '66'
-        },
+
       }
     },
     mounted() {
@@ -40,9 +34,9 @@
       onClickLeft() {
         this.$router.go(-1)
       },
-      onApply(){
-        console.log(12)
-        this.$router.push('/goods_apply_submit')
+      onApply(e){
+        console.log(e)
+        this.$router.push({path:'/goods_apply_submit',query:{id:e}})
       },
       initData() {
         const params = {
