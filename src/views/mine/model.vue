@@ -9,6 +9,10 @@
   import {
     Toast
   } from 'vant';
+  // 请求接口
+  import {
+    seeReferrer
+  } from '@/api/user.js'
   export default {
     data() {
       return {

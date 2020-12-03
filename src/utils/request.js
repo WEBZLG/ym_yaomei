@@ -39,9 +39,9 @@ service.interceptors.response.use(
     if (res.status && res.status !== 200) {
       // 登录超时,重新登录
       if (res.status === 401) {
-        store.dispatch('FedLogOut').then(() => {
-          location.reload()
-        })
+        // store.dispatch('FedLogOut').then(() => {
+        //   location.reload()
+        // })
       }
       return Promise.reject(res || 'error')
     } else {

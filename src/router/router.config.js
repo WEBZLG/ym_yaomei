@@ -262,6 +262,23 @@ export const constantRouterMap = [{
       title: '确认订单',
       keepAlive: false
     }
+  },{
+    path: '/shipment_list',
+    name: 'ShipmentList',
+    component: () => import('@/views/mine/shipment_list'),
+    meta: {
+      title: '出货记录',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/shipment_detail',
+    name: 'ShipmentDetail',
+    component: () => import('@/views/mine/shipment_detail'),
+    meta: {
+      title: '出货记录',
+      keepAlive: false
+    }
   },
 
 ]

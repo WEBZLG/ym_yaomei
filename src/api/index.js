@@ -13,6 +13,8 @@ const api = {
   ReplenishRequestlist:'/replenishRequestlist',
   ReplenishList:'/replenishList',
   ShipmentListhome:'/shipmentListhome',
+  ShipmentList:'/shipmentList',
+  ShipmentDetails:'/shipmentDetails',
   CdkeyList:'/cdkeyList',
   BuyCdkey:'/buyCdkey',
   MyAddress:'/myAddress',
@@ -29,7 +31,8 @@ const api = {
   PayRetnow:'/payRetnow',
   GoPay:'/goPay',
   ReplenishDetails:'/replenishDetails',
-  ReplenishRequest:'/replenishRequest'
+  ReplenishRequest:'/replenishRequest',
+  QiniuUpload:'/qiniuUpload'
 }
 
 export default api

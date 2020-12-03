@@ -120,7 +120,7 @@ export function replenishList(params) {
     hideloading: true
   })
 }
-//出货记录
+//库存出货记录
 export function shipmentListhome(params) {
   return request({
     url: api.ShipmentListhome,
@@ -129,7 +129,27 @@ export function shipmentListhome(params) {
     hideloading: true
   })
 }
+
 //出货记录
+export function shipmentList(params) {
+  return request({
+    url: api.ShipmentList,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+//出货详情
+export function shipmentDetails(params) {
+  return request({
+    url: api.ShipmentDetails,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+
+//兑换码列表
 export function cdkeyList(params) {
   return request({
     url: api.CdkeyList,
@@ -138,7 +158,7 @@ export function cdkeyList(params) {
     hideloading: true
   })
 }
-//出货记录
+//生成兑换码
 export function buyCdkey(params) {
   return request({
     url: api.BuyCdkey,
@@ -282,4 +302,12 @@ export function replenishRequest(params) {
     hideloading: true
   })
 }
-
+//上传图片
+export function qiniuUpload(params) {
+  return request({
+    url: api.QiniuUpload,
+    method: 'POST',
+    params,
+    hideloading: true
+  })
+}

@@ -44,11 +44,10 @@
         this.$router.go(-1)
       },
       onEdit(e) {
-          console.log(this.type)
-
         if (this.type == "order") {
           this.$storage.set('chooseAddress', e)
           this.$router.go(-1)
+          console.log(this.$storage.get('chooseAddress'))
         } else {
           this.$router.push({
             path: '/add_address',

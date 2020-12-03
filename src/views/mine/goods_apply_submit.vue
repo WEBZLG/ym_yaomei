@@ -2,7 +2,7 @@
   <div class="goods_apply_submit">
     <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" />
     <div class="banner">
-      <img :src="dataList" alt="">
+      <img :src="dataList.thumb" alt="">
 <!--      <van-swipe @change="onChange">
         <van-swipe-item>1</van-swipe-item>
         <van-swipe-item>2</van-swipe-item>
@@ -17,27 +17,27 @@
     </div>
     <div class="content">
       <van-cell-group>
-        <van-cell title="商品名字一大堆" :border="false" />
+        <van-cell :title="dataList.name" :border="false" />
         <van-cell :border="false">
           <template #title>
             <span class="custom-title">规格：</span>
-            <span type="danger">25/片</span>
+            <span type="danger">{{dataList.defaultsize}}</span>
           </template>
         </van-cell>
         <van-cell title="补货数量" :border="false">
           <template #default>
-            <van-stepper v-model="value" />
+            <van-stepper v-model="value" :min="dataList.shipnumleast" @change="onChangeNum"/>
           </template>
         </van-cell>
         <van-cell :border="false">
           <template #title>
             <span class="custom-title">补货总额：</span>
-            <span type="danger">123元</span>
+            <span type="danger">{{totalMoney}}元</span>
           </template>
         </van-cell>
         <van-field name="uploader" label="文件上传" :border="false">
           <template #input>
-            <van-uploader v-model="uploader" />
+            <van-uploader v-model="uploader"  :after-read="afterRead" max-count="1"/>
           </template>
         </van-field>
         <van-field v-model="name" :border="false" label="出货人姓名：" placeholder="请输入姓名" />
@@ -49,13 +49,15 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import BtnImg from '@/components/BtnImg'
   import {
     Toast
   } from 'vant';
   // 请求接口
   import {
-    replenishRequest
+    replenishRequest,
+    qiniuUpload
   } from '@/api/user.js'
   export default {
     data() {
@@ -64,11 +66,10 @@
         name: '',
         mobile: '',
         value: 1,
+        totalMoney:0,
         current: 0,
         src: require("../../../static/image/mine/submit_img.png"),
-        uploader: [{
-          url: 'https://img.yzcdn.cn/vant/leaf.jpg'
-        }],
+        uploader: [],
       }
     },
     components: {
@@ -85,6 +86,21 @@
       onChange(index) {
         this.current = index;
       },
+      onChangeNum(value){
+        this.totalMoney = this.dataList.money*value
+      },
+      afterRead(file) {
+            // 此时可以自行将文件上传至服务器
+            console.log(file);
+            qiniuUpload(params)
+              .then((res) => {
+                console.log(res)
+
+              })
+              .catch((err) => {
+                Toast(err.msg)
+              })
+          },
       initData(id) {
         const params = {
           uid: '2',
@@ -94,6 +110,9 @@
           .then((res) => {
             console.log(res)
             this.dataList = res.data
+            this.name = res.data.sendername
+            this.mobile = res.data.sendermobile
+            this.totalMoney = res.data.money*res.data.shipnumleast
           })
           .catch((err) => {
             Toast(err.msg)

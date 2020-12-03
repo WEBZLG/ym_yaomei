@@ -112,11 +112,14 @@
     mounted() {
       this.dataList = this.$route.query.params;
       this.number = this.$route.query.number;
-      this.initData();
       let chooseAddress = this.$storage.get('chooseAddress')
+      console.log('-----')
+      console.log(chooseAddress)
       if(chooseAddress) {
         this.addressList = chooseAddress;
-        this.$storage.remove('chooseAddress')
+        // this.$storage.remove('chooseAddress')
+      }else{
+        this.initData();
       }
     },
     methods: {

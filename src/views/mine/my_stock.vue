@@ -62,7 +62,7 @@
     },
     methods: {
       onMore() {
-        console.log('更多')
+        this.$router.push('/shipment_list')
       },
       onClickLeft(){
         this.$router.go(-1)
@@ -183,6 +183,8 @@
           width: 1.413333rem;
           height: 1.413333rem;
           margin-right: 0.373333rem;
+              border-radius: 50%;
+              overflow: hidden;
         }
         .content{
           flex: 1;
