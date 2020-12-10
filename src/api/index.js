@@ -32,7 +32,8 @@ const api = {
   GoPay:'/goPay',
   ReplenishDetails:'/replenishDetails',
   ReplenishRequest:'/replenishRequest',
-  QiniuUpload:'/qiniuUpload'
+  QiniuUpload:'/qiniuUpload',
+  GiftIndex:'/giftIndex'
 }
 
 export default api

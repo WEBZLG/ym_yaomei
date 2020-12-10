@@ -3,7 +3,7 @@
     <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" />
     <div class="banner">
       <img :src="dataList.thumb" alt="">
-<!--      <van-swipe @change="onChange">
+      <!--      <van-swipe @change="onChange">
         <van-swipe-item>1</van-swipe-item>
         <van-swipe-item>2</van-swipe-item>
         <van-swipe-item>3</van-swipe-item>
@@ -26,7 +26,7 @@
         </van-cell>
         <van-cell title="补货数量" :border="false">
           <template #default>
-            <van-stepper v-model="value" :min="dataList.shipnumleast" @change="onChangeNum"/>
+            <van-stepper v-model="value" :min="dataList.shipnumleast" @change="onChangeNum" />
           </template>
         </van-cell>
         <van-cell :border="false">
@@ -37,7 +37,7 @@
         </van-cell>
         <van-field name="uploader" label="文件上传" :border="false">
           <template #input>
-            <van-uploader v-model="uploader"  :after-read="afterRead" max-count="1"/>
+            <van-uploader v-model="uploader" :after-read="afterRead" max-count="1" />
           </template>
         </van-field>
         <van-field v-model="name" :border="false" label="出货人姓名：" placeholder="请输入姓名" />
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import uploader from '@/utils/uploader'
   import BtnImg from '@/components/BtnImg'
   import {
     Toast
@@ -62,14 +62,15 @@
   export default {
     data() {
       return {
-        dataList:'',
+        dataList: '',
         name: '',
         mobile: '',
         value: 1,
-        totalMoney:0,
+        totalMoney: 0,
         current: 0,
         src: require("../../../static/image/mine/submit_img.png"),
         uploader: [],
+        uploaderUrl: ''
       }
     },
     components: {
@@ -86,25 +87,24 @@
       onChange(index) {
         this.current = index;
       },
-      onChangeNum(value){
-        this.totalMoney = this.dataList.money*value
+      onChangeNum(value) {
+        this.totalMoney = this.dataList.money * value
       },
       afterRead(file) {
-            // 此时可以自行将文件上传至服务器
-            console.log(file);
-            qiniuUpload(params)
-              .then((res) => {
-                console.log(res)
+        this.uploaderUrl = file.file
+        // uploader(params)
+        //   .then((res) => {
+        //     console.log(res)
 
-              })
-              .catch((err) => {
-                Toast(err.msg)
-              })
-          },
+        //   })
+        //   .catch((err) => {
+        //     Toast(err.msg)
+        //   })
+      },
       initData(id) {
         const params = {
           uid: '2',
-           goods_id:id
+          goods_id: id
         }
         replenishRequest(params)
           .then((res) => {
@@ -112,7 +112,27 @@
             this.dataList = res.data
             this.name = res.data.sendername
             this.mobile = res.data.sendermobile
-            this.totalMoney = res.data.money*res.data.shipnumleast
+            this.totalMoney = res.data.money * res.data.shipnumleast
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
+      },
+      postData(id) {
+        const params = {
+          uid: '2',
+          goods_id: id,
+          sender: this.dataList.sender,
+          num: this.num,
+          photo: ''
+        }
+        replenishRequest(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+            this.name = res.data.sendername
+            this.mobile = res.data.sendermobile
+            this.totalMoney = res.data.money * res.data.shipnumleast
           })
           .catch((err) => {
             Toast(err.msg)
@@ -126,10 +146,12 @@
   .goods_apply_submit {
     .banner {
       height: 6.666666rem;
-        img{
-          width: 100%;
-          height: 100%;
-        }
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
       .van-swipe {
         height: 6.666666rem;
       }

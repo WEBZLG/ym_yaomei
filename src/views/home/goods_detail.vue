@@ -32,7 +32,7 @@
     <!-- 购买弹出 -->
     <van-popup v-model="popShow" closeable position="bottom" :style="{ height: '40%' }">
       <div class="pop_flex">
-        <van-image width="133" height="133" lazy-load :src="goodsData.thumb" />
+        <van-image width="133" height="133" lazy-load :src="goodsData.thumb_square" />
         <div class="pop_content">
           <h3 class="pop_title">{{goodsData.name}}</h3>
           <div class="price">￥{{goodsData.money}}</div>

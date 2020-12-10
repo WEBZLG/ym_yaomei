@@ -311,3 +311,12 @@ export function qiniuUpload(params) {
     hideloading: true
   })
 }
+//精品礼包
+export function giftIndex(params) {
+  return request({
+    url: api.GiftIndex,
+    method: 'POST',
+    params,
+    hideloading: true
+  })
+}
