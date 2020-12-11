@@ -697,7 +697,7 @@ module.exports = {
         // ws: true, // 是否启用websockets
         changOrigin: true, // 开启代理，在本地创建一个虚拟服务端
         pathRewrite: {
-          '^/api': '/'
+          '^/api': '/' 
         }
       }
     }
