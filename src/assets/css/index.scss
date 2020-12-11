@@ -15,9 +15,9 @@ body .app {
 #__vconsole {
   display: none;
 }
-#app{
-  padding-top: 46px;
-}
+// #app{
+//   padding-top: 46px;
+// }
 .van-nav-bar__title,
 .van-nav-bar .van-icon{
   font-weight: bold;
@@ -31,4 +31,10 @@ body .app {
 }
 h3{
   margin: 0;
+}
+.loading_box{
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    margin: -15px 0 0 -15px;
 }

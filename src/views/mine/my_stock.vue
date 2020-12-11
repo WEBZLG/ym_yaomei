@@ -1,6 +1,6 @@
 <template>
   <div class="my_stock">
-    <van-nav-bar fixed title="我的库存"  z-index="99"  left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="我的库存"  z-index="99"  left-arrow @click-left="onClickLeft" /> -->
     <div class="white_bg">
       <div class="icon_nav">
         <div @click="onStock">

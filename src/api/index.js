@@ -33,7 +33,8 @@ const api = {
   ReplenishDetails:'/replenishDetails',
   ReplenishRequest:'/replenishRequest',
   QiniuUpload:'/qiniuUpload',
-  GiftIndex:'/giftIndex'
+  GiftIndex:'/giftIndex',
+  ShowMore:'/showMore'
 }
 
 export default api

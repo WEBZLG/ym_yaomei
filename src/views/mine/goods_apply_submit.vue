@@ -1,6 +1,6 @@
 <template>
   <div class="goods_apply_submit">
-    <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div class="banner">
       <img :src="dataList.thumb" alt="">
       <!--      <van-swipe @change="onChange">

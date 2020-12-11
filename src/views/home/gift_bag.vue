@@ -1,6 +1,6 @@
 <template>
   <div class="gift_bag">
-    <van-nav-bar fixed title="精品礼包" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="精品礼包" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <div class="back">
         <img :src="dataList.backimg" alt="">
@@ -17,7 +17,7 @@
           <img src="../../../static/image/mine/cdk_img.png" alt="">
         </div>
         <div>礼包码兑换</div>
-        <div>
+        <div class="ipt">
           <van-field v-model="value" placeholder="请输入兑换码" />
         </div>
         <div class="exchange_btn">
@@ -102,9 +102,14 @@
       width: 6.613333rem;
       margin: 0 auto;
       text-align: center;
+      position: relative;
+      top: 50%;
+      margin-top: -107px;
+
       .img_icon {
         width: 3.013333rem;
         margin: 0 auto;
+        padding-top: 20px;
         img {
           width: 100%;
         }
@@ -113,9 +118,19 @@
       .exchange_btn {
         width: 4rem;
         margin: 0 auto;
+
         img {
-          width: 100%; 
+          width: 100%;
         }
+      }
+    }
+    .ipt{
+      .van-cell{
+        background-color: #f7f7f7;
+        border: 1px solid #f7f7f7;
+        margin: 0.133333rem auto;
+        width: 5.68rem;
+        padding: 0.133333rem;
       }
     }
   }

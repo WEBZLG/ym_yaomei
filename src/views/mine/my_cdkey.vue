@@ -1,6 +1,6 @@
 <template>
   <div class="my_sdkey">
-    <van-nav-bar fixed title="我的兑换码" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="我的兑换码" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <div class="banner">
         <div class="number">当前库存{{resData.startnum || 0}}张</div>

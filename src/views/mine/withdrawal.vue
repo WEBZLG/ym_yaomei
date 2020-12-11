@@ -1,6 +1,6 @@
 <template>
   <div class="withdrawal">
-    <van-nav-bar fixed title="提现" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="提现" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div class="white_bg ipt_money">
       <label for="">账户余额将提现到微信余额</label>
       <van-field v-model="money" type="number" placeholder="请输入提现金额" />

@@ -1,6 +1,6 @@
 <template>
   <div class="message">
-    <van-nav-bar fixed title="消息" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="消息" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <!-- 标签栏 -->
     <van-tabs color="#395467" sticky title-inactive-color="#282828" title-active-color="#3a576a" @click="onTabs">
       <van-tab v-for="(item,index) in tabList" :title="item" :key='index'>

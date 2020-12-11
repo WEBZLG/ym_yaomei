@@ -1,6 +1,6 @@
 <template>
   <div class="upgrade">
-    <van-nav-bar fixed title="在线升级"  z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="在线升级"  z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <div class="menu_img" v-for="(item,index) in dataList.group"><img :src="item.image" alt=""></div>
     </div>

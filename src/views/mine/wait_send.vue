@@ -1,6 +1,6 @@
 <template>
   <div class="wait_send">
-    <van-nav-bar fixed title="待配送" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="待配送" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <van-cell-group class="cell_top">
         <van-cell title="待配送" :border="false" title-class="my_title" value-class="my_value">

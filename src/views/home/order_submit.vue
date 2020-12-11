@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <van-nav-bar fixed title="确认订单" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="确认订单" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div class="order_submit">
       <div class="address">
         <van-cell title-class="cell-title" v-if="addressList =='暂无收货地址'" :title="addressList" center size="large" is-link

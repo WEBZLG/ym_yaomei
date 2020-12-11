@@ -1,6 +1,6 @@
 <template>
   <div class="withdrawal_list">
-    <van-nav-bar fixed title="提现记录" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="提现记录" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <van-cell-group>
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">

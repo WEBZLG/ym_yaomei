@@ -1,6 +1,6 @@
 <template>
   <div class="income_list">
-    <van-nav-bar fixed title="收益明细" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="收益明细" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <!-- 列表 -->
     <div class="container">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">

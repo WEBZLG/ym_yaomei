@@ -1,6 +1,6 @@
 <template>
   <div class="system">
-    <van-nav-bar fixed title="设置" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="设置" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <!-- 列表 -->
     <div class="">
       <van-cell-group>

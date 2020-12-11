@@ -1,6 +1,6 @@
 <template>
   <div class="service">
-    <van-nav-bar fixed title="客服服务" z-index="99"  left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="客服服务" z-index="99"  left-arrow @click-left="onClickLeft" /> -->
     <!-- banner -->
     <div class="banner">
        <img src="../../../static/image/mine/service_bg.png" alt="">

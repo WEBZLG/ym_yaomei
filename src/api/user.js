@@ -48,7 +48,7 @@ export function yaomeiIndex(params) {
     hideloading: true
   })
 }
-// 首页商品
+// 首页商品详情
 export function goodsInfo(params) {
   return request({
     url: api.GoodsInfo,
@@ -57,6 +57,16 @@ export function goodsInfo(params) {
     hideloading: true
   })
 }
+// 首页商品更多
+export function showMore(params) {
+  return request({
+    url: api.ShowMore,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+
 //用户信息
 export function userInfo(params) {
   return request({

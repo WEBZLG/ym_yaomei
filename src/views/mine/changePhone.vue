@@ -1,6 +1,6 @@
 <template>
   <div class="change_phone">
-    <van-nav-bar fixed title="修改手机号" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="修改手机号" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <van-cell-group>
         <van-field v-model="oldPhone" type="tel" placeholder="请输入原手机号" />

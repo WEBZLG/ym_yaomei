@@ -1,18 +1,22 @@
 <!-- home -->
 <template>
   <div class="home">
-    <van-nav-bar fixed title="首页" z-index="99" />
-    <div>
-      <van-swipe :autoplay="3000">
-        <van-swipe-item v-for="(item, index) in bannerData.banner" :key="index">
-          <img v-lazy="item.thumb" />
-        </van-swipe-item>
-      </van-swipe>
-      <div class="gift_img" @click="onGift"><img :src="bannerData.giftimg" alt=""></div>
-      <Caption :content='bannerData.categoryname' @click="onView"></Caption>
-      <div class="goods_list">
-        <Goods v-for="(item,index) in indexData" :key="index" :content="item" @onclick="onDetail"></Goods>
-      </div>
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list v-model="loading" :finished="finished" :finished-text="finishedText" @load="initData">
+          <van-swipe :autoplay="3000">
+            <van-swipe-item v-for="(item, index) in bannerData.banner" :key="index">
+              <img v-lazy="item.thumb" />
+            </van-swipe-item>
+          </van-swipe>
+          <div class="gift_img" @click="onGift"><img :src="bannerData.giftimg" alt=""></div>
+          <Caption :content='bannerData.categoryname' @click="onView"></Caption>
+          <div class="goods_list">
+            <Goods v-for="(item,index) in indexData" :key="index" :content="item" @onclick="onDetail"></Goods>
+          </div>
+    </van-list>
+    </van-pull-refresh>
+    <div class="loading_box"  v-if="show_loading">
+      <van-loading type="spinner"/>
     </div>
   </div>
 </template>
@@ -26,14 +30,20 @@
     yaomeiIndex,
     goodsInfo
   } from '@/api/user.js'
-import {
+  import {
     Toast
   } from 'vant';
   export default {
     data() {
       return {
-        bannerData:'',
-        indexData:''
+        bannerData: '',
+        indexData: [],
+        page: 1,
+        loading: false,
+        show_loading:true,
+        finished: false,
+        refreshing: false,
+        finishedText: '',
       }
     },
 
@@ -43,45 +53,75 @@ import {
     },
     mounted() {
       this.getBanner();
-      this.getIndex();
     },
 
     methods: {
-      onGift(){
+      onGift() {
         this.$router.push('/gift_bag')
       },
-      onDetail(value){
+      onDetail(value) {
         console.log(value)
         this.$router.push({
-            path: '/goods_detail',
-            query: {
-              id: value
-            }
-          })
+          path: '/goods_detail',
+          query: {
+            id: value
+          }
+        })
       },
-      onView(){
-
+      onView() {
+        this.$router.push('/goods_list')
       },
       // 轮播
-      getBanner(){
+      getBanner() {
         getBanner().then((res) => {
             console.log(res)
             this.bannerData = res.data
+            this.show_loading = false;
           })
           .catch((err) => {
             Toast(err.msg)
           })
       },
       // 首页商品
-      getIndex(){
-        yaomeiIndex().then((res) => {
+      // 请求数据
+      initData() {
+        const params = {
+          uid: '2',
+          page: this.page
+        }
+        yaomeiIndex(params)
+          .then((res) => {
             console.log(res)
-            this.indexData = res.data
+            if (this.refreshing) {
+              this.indexData = [];
+              this.refreshing = false;
+            }
+            if (res.data.length > 0) {
+              for (let item of res.data) {
+                this.indexData.push(item)
+              }
+              this.page++
+            } else {
+              this.finished = true
+            }
+            if (this.indexData.length > 0) {
+              this.finishedText = '没有更多了'
+            } else {
+              this.finishedText = ''
+            }
+            this.loading = false;
           })
           .catch((err) => {
             Toast(err.msg)
           })
-      }
+      },
+      onRefresh() {
+        this.page = 1
+        // this.indexData = [];
+        this.finished = false;
+        this.loading = true;
+        this.initData();
+      },
     }
   }
 </script>
@@ -124,7 +164,6 @@ import {
 
     .goods_list {
       margin: 0 0.32rem;
-
       .goods_img {
         min-height: 3.306666rem;
 
@@ -132,9 +171,11 @@ import {
           width: 100%;
         }
       }
-      .goods_item{
+
+      .goods_item {
         margin-bottom: 0.4rem;
       }
+
       .price {
         font-size: 20px;
         font-weight: bold;

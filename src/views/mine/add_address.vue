@@ -1,6 +1,6 @@
 <template>
   <div class="add_address">
-    <van-nav-bar fixed title="收货地址" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="收货地址" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <van-cell-group>
         <van-field v-model="name" label="收货人" placeholder="请输入收货人姓名" />

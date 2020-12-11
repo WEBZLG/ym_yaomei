@@ -1,6 +1,6 @@
 <template>
   <div class="goods_apply">
-    <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <GoodsApply v-for="(item,index) in dataList" :content="item" @onclick="onApply"></GoodsApply>
     </div>

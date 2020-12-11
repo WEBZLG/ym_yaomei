@@ -1,7 +1,7 @@
 <!-- home -->
 <template>
   <div class="container">
-    <van-nav-bar fixed title="我的" z-index="99" />
+    <!-- <van-nav-bar fixed title="我的" z-index="99" /> -->
     <!-- 头部 -->
     <div class="banner">
       <div class="sys-box">

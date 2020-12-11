@@ -1,6 +1,6 @@
 <template>
   <div class="goods_stock">
-    <van-nav-bar fixed title="商品库存" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="商品库存" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <GoodsInfo v-for="(item,index) in dataList" :key="index" :content="item" @onclick="onStock"></GoodsInfo>
     </div>

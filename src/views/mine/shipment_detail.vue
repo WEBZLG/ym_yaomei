@@ -1,6 +1,6 @@
 <template>
   <div class="shipment_detail">
-    <van-nav-bar fixed title="出货详情" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="出货详情" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
 
     </div>

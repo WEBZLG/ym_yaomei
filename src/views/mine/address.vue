@@ -1,6 +1,6 @@
 <template>
   <div class="address">
-    <van-nav-bar fixed title="收货地址" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="收货地址" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div class="container">
       <Address v-for="(item,index) in dataList" :key="index" :content="item" @click="onEdit(item)"></Address>
       <div class="fixed">

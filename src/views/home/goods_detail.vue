@@ -1,6 +1,6 @@
 <template>
   <div class="goods_detail">
-    <van-nav-bar fixed title="商品详情" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="商品详情" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <div class="banner">
         <van-swipe @change="onChange">

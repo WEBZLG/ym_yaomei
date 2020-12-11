@@ -247,11 +247,11 @@ export const constantRouterMap = [{
     }
   },
   {
-    path: '/goods_detail',
-    name: 'GoodsDetail',
-    component: () => import('@/views/home/goods_detail'),
+    path: '/goods_list',
+    name: 'GoodsList',
+    component: () => import('@/views/home/goods_list'),
     meta: {
-      title: '商品详情',
+      title: '商品列表',
       keepAlive: false
     }
   },{

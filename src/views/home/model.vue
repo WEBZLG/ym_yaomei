@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <van-nav-bar fixed title="消息"  z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="消息"  z-index="99" left-arrow @click-left="onClickLeft" /> -->
 
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="my_order">
-    <van-nav-bar fixed title="订单管理" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="订单管理" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <!-- 标签栏 -->
     <van-tabs v-model="active" color="#395467" swipe-threshold="6" sticky :offset-top="46" title-inactive-color="#282828"
       title-active-color="#3a576a" @click="onTabs">

@@ -1,6 +1,6 @@
 <template>
   <div class="shipment_list">
-    <van-nav-bar fixed title="出货记录" z-index="99" left-arrow @click-left="onClickLeft" />
+    <!-- <van-nav-bar fixed title="出货记录" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
       <!-- 标签栏 -->
       <van-tabs color="#395467" sticky title-inactive-color="#282828" title-active-color="#3a576a" @click="onTabs">
