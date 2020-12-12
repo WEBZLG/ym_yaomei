@@ -25,6 +25,13 @@
             },
             active: require('../../../static/image/home_active.png'),
             inactive: require('../../../static/image/home.png'),
+          },{
+            title: '动态',
+            to: {
+              name: 'Dynamic'
+            },
+            active: require('../../../static/image/dynamic_active.png'),
+            inactive: require('../../../static/image/dynamic.png'),
           },
           {
             title: '我的',

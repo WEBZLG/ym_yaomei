@@ -1,6 +1,5 @@
 <template>
   <div class="goods_apply_submit">
-    <!-- <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div class="banner">
       <img :src="dataList.thumb" alt="">
       <!--      <van-swipe @change="onChange">
@@ -40,11 +39,11 @@
             <van-uploader v-model="uploader" :after-read="afterRead" max-count="1" />
           </template>
         </van-field>
-        <van-field v-model="name" :border="false" label="出货人姓名：" placeholder="请输入姓名" />
-        <van-field v-model="mobile" :border="false" label="联系方式：" placeholder="请输入联系电话" />
+        <van-field v-model="name" :border="false" label="出货人姓名：" placeholder="请输入姓名" readonly />
+        <van-field v-model="mobile" :border="false" label="联系方式：" placeholder="请输入联系电话" readonly />
       </van-cell-group>
     </div>
-    <BtnImg :src="src"></BtnImg>
+    <BtnImg :src="src" @onclick="postData(dataList.id)"></BtnImg>
   </div>
 </template>
 
@@ -55,9 +54,10 @@
     Toast
   } from 'vant';
   // 请求接口
+
   import {
     replenishRequest,
-    qiniuUpload
+    replenishAction
   } from '@/api/user.js'
   export default {
     data() {
@@ -81,25 +81,15 @@
       this.initData(id)
     },
     methods: {
-      onClickLeft() {
-        this.$router.go(-1)
-      },
       onChange(index) {
         this.current = index;
       },
       onChangeNum(value) {
         this.totalMoney = this.dataList.money * value
       },
+
       afterRead(file) {
         this.uploaderUrl = file.file
-        // uploader(params)
-        //   .then((res) => {
-        //     console.log(res)
-
-        //   })
-        //   .catch((err) => {
-        //     Toast(err.msg)
-        //   })
       },
       initData(id) {
         const params = {
@@ -119,22 +109,32 @@
           })
       },
       postData(id) {
-        const params = {
-          uid: '2',
-          goods_id: id,
-          sender: this.dataList.sender,
-          num: this.num,
-          photo: ''
+        if (this.uploaderUrl == '') {
+          Toast('请上传凭证')
+          return false;
         }
-        replenishRequest(params)
+        uploader(this.uploaderUrl)
           .then((res) => {
-            console.log(res)
-            this.dataList = res.data
-            this.name = res.data.sendername
-            this.mobile = res.data.sendermobile
-            this.totalMoney = res.data.money * res.data.shipnumleast
+            const params = {
+              uid: '2',
+              goods_id: id,
+              sender: this.dataList.sender,
+              num: this.value,
+              photo: res.data
+            }
+            replenishAction(params)
+              .then((res) => {
+                Toast(res.msg)
+                setTimeout((res) => {
+                  this.$router.go(-1)
+                }, 1000)
+              })
+              .catch((err) => {
+                Toast(err.msg)
+              })
           })
           .catch((err) => {
+            console.log(err)
             Toast(err.msg)
           })
       },

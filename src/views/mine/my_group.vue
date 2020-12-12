@@ -1,6 +1,5 @@
 <template>
   <div class="my_group">
-    <!-- <van-nav-bar fixed title="我的团队" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <!-- 标签栏 -->
     <van-tabs color="#395467" sticky title-inactive-color="#282828" title-active-color="#3a576a" @click="onTabs">
       <van-tab v-for="(item,index) in tabList" :title="item.name+'('+item.num+')'" :key='index'>
@@ -46,9 +45,6 @@
       this.initData()
     },
     methods: {
-      onClickLeft() {
-        this.$router.go(-1)
-      },
       onTabs(e){
         console.log(e)
         this.myTeam(e)

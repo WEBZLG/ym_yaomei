@@ -130,6 +130,16 @@ export function replenishList(params) {
     hideloading: true
   })
 }
+//补货提交
+export function replenishAction(params) {
+  return request({
+    url: api.ReplenishAction,
+    method: 'get',
+    params,
+    hideloading: true
+  })
+}
+
 //库存出货记录
 export function shipmentListhome(params) {
   return request({

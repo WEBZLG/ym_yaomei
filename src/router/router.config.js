@@ -20,6 +20,15 @@ export const constantRouterMap = [{
         }
       },
       {
+        path: '/dynamic',
+        name: 'Dynamic',
+        component: () => import('@/views/dynamic/index'),
+        meta: {
+          title: '动态',
+          keepAlive: false
+        }
+      },
+      {
         path: '/mine',
         name: 'Mine',
         component: () => import('@/views/mine/mine'),

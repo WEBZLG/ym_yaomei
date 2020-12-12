@@ -34,7 +34,8 @@ const api = {
   ReplenishRequest:'/replenishRequest',
   QiniuUpload:'/qiniuUpload',
   GiftIndex:'/giftIndex',
-  ShowMore:'/showMore'
+  ShowMore:'/showMore',
+  ReplenishAction:'/replenishAction'
 }
 
 export default api

@@ -43,8 +43,28 @@
           <div>库存数量：{{goodsData.stock}}</div>
         </div>
       </div>
-        <div><BtnImg :src="src" @onclick="onSubmit"></BtnImg></div>
+      <div>
+        <BtnImg :src="src" @onclick="onSubmit"></BtnImg>
+      </div>
     </van-popup>
+    <!-- 兑换 -->
+    <van-overlay :show="show" @click="show = false">
+      <div class="wrapper" @click.stop>
+        <div class="img_icon">
+          <img src="../../../static/image/mine/cdk_img.png" alt="">
+        </div>
+        <div>当前库存不足</div>
+        <div class="btn_box">
+          <div class="btn" @click="onApply(goodsData.id)">
+            <img src="../../../static/image/home/apply_btn.png" alt="">
+          </div>
+          <div class="btn" @click="onBuy(goodsData.id)">
+            <img src="../../../static/image/home/buy_btn.png" alt="">
+          </div>
+        </div>
+      </div>
+    </van-overlay>
+
   </div>
 </template>
 
@@ -61,11 +81,12 @@
     data() {
       return {
         src: require('../../../static/image/home/buy_now.png'),
+        show: false,
         current: 0,
         goodsData: '',
         totalLength: 0,
         popShow: false,
-        number:1
+        number: 1
       }
     },
     mounted() {
@@ -82,11 +103,21 @@
       onChange(index) {
         this.current = index;
       },
-      onShow(){
+      onShow() {
         this.popShow = true
       },
-      onSubmit(){
-        this.$router.push({path:'/order_submit',query:{params:this.goodsData,number:this.number}})
+      onSubmit() {
+        if (this.goodsData.userstock == 0) {
+          this.popShow = false
+          this.show = true
+        }
+        else this.$router.push({path:'/order_submit',query:{params:this.goodsData,number:this.number}});
+      },
+      onApply(e){
+        this.$router.push({path:'/goods_apply_submit',query:{id:e}})
+      },
+      onBuy(){
+        this.$router.push({path:'/order_submit',query:{params:this.goodsData,number:this.number}});
       },
       initData(id) {
         let param = {
@@ -158,6 +189,7 @@
     .pop_flex {
       @include flexbox($jc: '', $ai:top);
       padding: 1.066666rem 0.32rem 0.373333rem;
+
       .pop_content {
         flex: 1;
         margin-left: 0.32rem;
@@ -182,6 +214,33 @@
           @include flexbox();
           margin: 0.266666rem 0;
         }
+      }
+    }
+
+    .wrapper {
+      background-color: $white-color;
+      border-radius: 0.266666rem;
+      width: 6.613333rem;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      top: 50%;
+      margin-top: -107px;
+      img {
+          width: 100%;
+        }
+      .img_icon {
+        width: 3.013333rem;
+        margin: 0 auto;
+        padding-top: 20px;
+      }
+      .btn_box{
+        @include  flexbox();
+        margin:  0.32rem;
+      }
+      .btn {
+        width: 3.013333rem;
+        margin: 0 auto;
       }
     }
   }
