@@ -10,7 +10,6 @@ export function login(data) {
     data
   })
 }
-
 // 用户信息 post 方法
 export function getUserInfo(data) {
   return request({

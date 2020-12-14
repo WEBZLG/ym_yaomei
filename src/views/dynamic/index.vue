@@ -12,21 +12,8 @@
         </template>
         <!-- 列表 -->
         <div class="container">
-          <div class="dy_video">
-            <div class="flex">
-              <div class="flex_a">
-                <div class="head"><img src="" alt=""></div>
-                <div>
-                  <h3>官方作者</h3>
-                  <p>#5G播商#</p>
-                </div>
-              </div>
-              <div>4次分享</div>
-            </div>
-            <div>
-              <video src=""></video>
-            </div>
-          </div>
+          <DyVideo></DyVideo>
+
         </div>
       </van-tab>
     </van-tabs>
@@ -35,6 +22,7 @@
 </template>
 
 <script>
+  import DyVideo from '@/components/DyVideo'
   import {
     Toast
   } from 'vant';
@@ -52,7 +40,7 @@
       }
     },
     components: {
-
+      DyVideo
     },
     methods: {
       onTabs(e) {
@@ -65,13 +53,15 @@
 
 <style lang="scss">
   .dynamic {
-    .flex{
-      @include  flexbox()
+    .flex {
+      @include flexbox()
     }
-    .flex_a{
-      @include  flexbox($jc:'')
+
+    .flex_a {
+      @include flexbox($jc: '')
     }
-    .head{
+
+    .head {
       height: 1.333333rem;
       width: 1.333333rem;
       border-radius: 50%;
