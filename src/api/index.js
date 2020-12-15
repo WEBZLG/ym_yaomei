@@ -35,7 +35,10 @@ const api = {
   QiniuUpload:'/qiniuUpload',
   GiftIndex:'/giftIndex',
   ShowMore:'/showMore',
-  ReplenishAction:'/replenishAction'
+  ReplenishAction:'/replenishAction',
+  UserWithdraw:'/user_withdraw',
+  AppWithdraw:'/app_withdraw',
+  OrderDetails:'/orderDetails'
 }
 
 export default api

@@ -108,7 +108,7 @@
         cellList: [{
             icon_url: require('../../../static/image/mine/active_icon.png'),
             title: '我的动态',
-            link: ''
+            link: '/my_dynamic'
           },
           {
             icon_url: require('../../../static/image/mine/group_icon.png'),

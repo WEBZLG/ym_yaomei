@@ -1,11 +1,14 @@
 <template>
   <div class="my_order">
-    <!-- <van-nav-bar fixed title="订单管理" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <!-- 标签栏 -->
-    <van-tabs v-model="active" color="#395467" swipe-threshold="6" sticky :offset-top="46" title-inactive-color="#282828"
+    <van-tabs v-model="active" color="#395467" swipe-threshold="6" sticky title-inactive-color="#282828"
       title-active-color="#3a576a" @click="onTabs">
       <van-tab v-for="(item,index) in tabList" :title="item" :key='index'>
-        <GoodsItem v-for="(item,index) in dataList" :key="index" :content='item' @action="onAction" @detail="onDetail"></GoodsItem>
+        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+          <van-list v-model="loading" :finished="finished" :finished-text="finishedText" @load="initData">
+            <GoodsItem v-for="(item,index) in dataList" :key="index" :content='item' @action="onAction" @detail="onDetail(item)"></GoodsItem>
+          </van-list>
+        </van-pull-refresh>
       </van-tab>
     </van-tabs>
     <div>
@@ -23,14 +26,21 @@
     goPay
   } from '@/api/user.js'
   import {
-    Dialog,Toast
+    Dialog,
+    Toast
   } from 'vant';
   export default {
     data() {
       return {
         active: 0,
         tabList: ['全部', '待付款', '待配送', '待签收', '已完成'],
+        page: 1,
+        type: 0,
         dataList: [],
+        loading: false,
+        finished: false,
+        refreshing: false,
+        finishedText: '',
       }
     },
     mounted() {
@@ -42,9 +52,6 @@
       GoodsItem
     },
     methods: {
-      onClickLeft() {
-        this.$router.go(-1)
-      },
       // 按钮操作
       onAction(type, id) {
         console.log(type, id)
@@ -70,31 +77,77 @@
       },
       // 详情
       onDetail(value) {
+        let path;
+        switch (value.status) {
+          case '0':
+            path = '/wait_pay'
+            break;
+          case '1':
+            path = '/wait_send'
+            break;
+          case '2':
+            path = '/wait_sign'
+            break;
+          case '6':
+            path = '/complate'
+            break;
+          default:
+            break;
+        }
+
         this.$router.push({
-          path: '/goods_detail',
+          path: path,
           query: {
-            id: value
+            id: value.id
           }
         })
       },
       // 切换
       onTabs(e) {
-        e == 4 ? this.initData(6) : this.initData(e - 1)
+        e == 4 ? this.type = 6 : this.type = (e - 1)
+        this.active = e
+        this.onRefresh()
       },
       // 请求数据
-      initData(type) {
+      // 请求数据
+      initData() {
         const params = {
           uid: '2',
-          type: type
+          page: this.page,
+          type: this.type
         }
         myOrder(params)
           .then((res) => {
             console.log(res)
-            this.dataList = res.data
+            // this.dataList = res.data
+            if (this.refreshing) {
+              this.dataList = [];
+              this.refreshing = false;
+            }
+            if (res.data.length > 0) {
+              for (let item of res.data) {
+                this.dataList.push(item)
+              }
+              this.page++
+            } else {
+              this.finished = true
+            }
+            if (this.dataList.length > 0) {
+              this.finishedText = '没有更多了'
+            }
+            this.loading = false;
+            // this.isDisable = false
           })
           .catch((err) => {
             Toast(err.msg)
           })
+      },
+      onRefresh() {
+        this.page = 1
+        this.dataList = [];
+        this.finished = false;
+        this.loading = true;
+        this.initData();
       },
       // 请求数据
       cancelOrder(oid) {
@@ -146,23 +199,23 @@
           });
       },
       // 判断支付方式
-      payType(oid){
+      payType(oid) {
         let _this = this
         let params = {
-          uid:'2',
-          order_id:oid
+          uid: '2',
+          order_id: oid
         }
         payRetnow(params)
           .then((res) => {
-            if(res.data==2){
-               _this.wechatPay(oid)
+            if (res.data == 2) {
+              _this.wechatPay(oid)
             }
           })
           .catch((err) => {
             Toast(err.msg)
           })
       },
-      wechatPay(oid){
+      wechatPay(oid) {
         const params = {
           uid: '2',
           order_id: oid
@@ -178,28 +231,28 @@
       },
       // 支付
       onBridgeReady(params) {
-              let that = this
-              const pay_params = params;
-              WeixinJSBridge.invoke(
-                'getBrandWCPayRequest', {
-                  "appId": pay_params.appId, //公众号名称，由商户传入
-                  "timeStamp": pay_params.timeStamp, //时间戳，自1970年以来的秒数
-                  "nonceStr": pay_params.nonceStr, //随机串
-                  "package": pay_params.package,
-                  "signType": pay_params.signType, //微信签名方式：
-                  "paySign": pay_params.paySign //微信签名
-                },
-                function (res) {
-                  if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    vant.Toast.success('支付成功');
-                    setTimeout(() => {
-                      window.location.assign(`./order.html?current=1`)
-                    }, 1000)
-                  } else {
-                    vant.Toast('取消支付')
-                  }
-                });
-            },
+        let that = this
+        const pay_params = params;
+        WeixinJSBridge.invoke(
+          'getBrandWCPayRequest', {
+            "appId": pay_params.appId, //公众号名称，由商户传入
+            "timeStamp": pay_params.timeStamp, //时间戳，自1970年以来的秒数
+            "nonceStr": pay_params.nonceStr, //随机串
+            "package": pay_params.package,
+            "signType": pay_params.signType, //微信签名方式：
+            "paySign": pay_params.paySign //微信签名
+          },
+          function(res) {
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
+              vant.Toast.success('支付成功');
+              setTimeout(() => {
+                window.location.assign(`./order.html?current=1`)
+              }, 1000)
+            } else {
+              vant.Toast('取消支付')
+            }
+          });
+      },
     }
   }
 </script>

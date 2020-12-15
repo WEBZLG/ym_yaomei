@@ -1,16 +1,16 @@
 <template>
   <div class="goodsInfo" @click="onclick(content.goods_id)">
     <div>
-      <van-image height="100" width="100" lazy-load :src="content.goodsimg">
+      <van-image height="100" width="100" lazy-load :src="content.goodsimg||content.thumb_square">
         <template v-slot:loading>
           <van-loading type="spinner" size="20" />
         </template>
       </van-image>
     </div>
     <div class="parameter">
-      <h3 class="title">{{content.goodsname}}</h3>
+      <h3 class="title">{{content.goodsname||content.name}}</h3>
       <div>￥<span>{{content.money}}</span></div>
-      <div v-if="content.size_name">规格：<span>{{content.size_name}}</span></div>
+      <div v-if="content.size_name||content.defaultsize">规格：<span>{{content.size_name||content.defaultsize}}</span></div>
       <div v-if="content.buy_num">数量：<span>{{content.buy_num}}</span></div>
       <div v-if="content.stock||content.stock==0">自有库存数：<span>{{content.stock}}</span></div>
     </div>
@@ -23,7 +23,7 @@
     props: {
       content: {
         type: Object,
-        default: ''
+        default: Object
       }
     },
     data() {

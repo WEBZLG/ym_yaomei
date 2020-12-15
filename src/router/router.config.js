@@ -289,5 +289,13 @@ export const constantRouterMap = [{
       keepAlive: false
     }
   },
-
+  {
+    path: '/my_dynamic',
+    name: 'MyDynamic',
+    component: () => import('@/views/mine/my_dynamic'),
+    meta: {
+      title: '我的动态',
+      keepAlive: false
+    }
+  },
 ]

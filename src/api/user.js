@@ -339,3 +339,30 @@ export function giftIndex(params) {
     hideloading: true
   })
 }
+// 提现页面数据
+export function userWithdraw(params) {
+  return request({
+    url: api.UserWithdraw,
+    method: 'POST',
+    params,
+    hideloading: true
+  })
+}
+// 提现提交
+export function appWithdraw(params) {
+  return request({
+    url: api.AppWithdraw,
+    method: 'POST',
+    params,
+    hideloading: true
+  })
+}
+// 提现提交
+export function orderDetails(params) {
+  return request({
+    url: api.OrderDetails,
+    method: 'POST',
+    params,
+    hideloading: true
+  })
+}

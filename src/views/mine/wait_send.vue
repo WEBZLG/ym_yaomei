@@ -4,15 +4,15 @@
     <div>
       <van-cell-group class="cell_top">
         <van-cell title="待配送" :border="false" title-class="my_title" value-class="my_value">
-          <template #label>
-            <div>订单编号：</div>
-            <div>下单时间：</div>
+          <template #label v-if="dataList.order">
+            <div>订单编号：{{dataList.order.order_id}}</div>
+            <div>下单时间：{{dataList.order.paytime}}</div>
           </template>
         </van-cell>
-        <van-cell title="张阿森纳 18888888888" :border="false" label="黑龙江哈尔滨" title-class="my_name" value-class="my_value" />
+        <van-cell v-if="dataList.address" :title="dataList.address.shouhuo_name+' '+ dataList.address.shouhuo_mobile" :border="false" :label="dataList.address.address" title-class="my_name" value-class="my_value" />
       </van-cell-group>
 
-      <GoodsInfo :content='content'></GoodsInfo>
+      <GoodsInfo :content='dataList.goods'></GoodsInfo>
 
       <div class="other">
         <van-cell-group>
@@ -28,9 +28,9 @@
               </div> -->
             </template>
           </van-cell>
-          <van-cell title="快递费用" :value="'￥'+dataList.post_money" value-class="orange-color"></van-cell>
-          <van-cell title="实付款" :value="'￥'+dataList.total_money" value-class="orange-color"></van-cell>
-          <van-field v-model="mark" readonly label="订单备注" placeholder="选填,请先和商家协商" />
+          <van-cell v-if="dataList.order" title="快递费用" :value="dataList.order.postage=='0'?'免运费':'￥'+dataList.order.postage" value-class="orange-color"></van-cell>
+          <van-cell v-if="dataList.order" title="需付款" :value="'￥'+dataList.order.money" value-class="orange-color"></van-cell>
+          <van-field v-if="dataList.order" label="订单备注"  :value="dataList.order.other" readonly/>
         </van-cell-group>
       </div>
     </div>
@@ -42,32 +42,39 @@
   import {
     Toast
   } from 'vant';
+  import {
+    orderDetails
+  } from '@/api/user.js'
   export default {
     data() {
       return {
-        content: {
-          name: '测试案例测试案例测试案例测试案例测试案例测试案例测试案例',
-          thumb: "https://img.yzcdn.cn/vant/cat.jpeg",
-          money: "88.00",
-          size_name: '10g/片',
-          buy_num: '66'
-        },
         radio: '1',
-        mark: '',
+        dataList:'',
         activeIcon: require('../../../static/image/mine/checked.png'),
         inactiveIcon: require('../../../static/image/mine/check.png'),
-        dataList: {
-          post_money: '123',
-          total_money: '321'
-        }
       }
     },
     components: {
       GoodsInfo
     },
+    mounted() {
+      this.initData(this.$route.query.id)
+    },
     methods: {
-      onClickLeft() {
-        this.$router.go(-1)
+      // 请求数据
+      initData(id) {
+        const params = {
+          uid: '2',
+          order_id:id
+        }
+        orderDetails(params)
+          .then((res) => {
+            console.log(res)
+            this.dataList = res.data
+          })
+          .catch((err) => {
+            Toast(err.msg)
+          })
       },
     }
   }
