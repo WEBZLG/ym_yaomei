@@ -1,8 +1,11 @@
 <template>
   <div class="goods_apply">
-    <!-- <van-nav-bar fixed title="补货申请" z-index="99" left-arrow @click-left="onClickLeft" /> -->
     <div>
-      <GoodsApply v-for="(item,index) in dataList" :content="item" @onclick="onApply"></GoodsApply>
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list v-model="loading" :finished="finished" :finished-text="finishedText" @load="initData">
+          <GoodsApply v-for="(item,index) in dataList" :content="item" @onclick="onApply"></GoodsApply>
+        </van-list>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
@@ -20,7 +23,12 @@
   export default {
     data() {
       return {
-        dataList:[],
+        page: 1,
+        dataList: [],
+        loading: false,
+        finished: false,
+        refreshing: false,
+        finishedText: '',
 
       }
     },
@@ -31,25 +39,55 @@
       GoodsApply
     },
     methods: {
-      onClickLeft() {
-        this.$router.go(-1)
-      },
-      onApply(e){
+
+      onApply(e) {
         console.log(e)
-        this.$router.push({path:'/goods_apply_submit',query:{id:e}})
+        this.$router.push({
+          path: '/goods_apply_submit',
+          query: {
+            id: e
+          }
+        })
       },
+      // 请求数据
       initData() {
         const params = {
-          uid: '2'
+          uid: '2',
+          page: this.page
         }
         replenishRequestlist(params)
           .then((res) => {
             console.log(res)
-            this.dataList = res.data
+            if (this.refreshing) {
+              this.dataList = [];
+              this.refreshing = false;
+            }
+            if (res.data.length > 0) {
+              for (let item of res.data) {
+                this.dataList.push(item)
+              }
+              this.page++
+            } else {
+              this.finished = true
+            }
+            if (this.dataList.length > 0) {
+              this.finishedText = '没有更多了'
+            } else {
+              this.finishedText = ''
+            }
+            this.loading = false;
+            // this.isDisable = false
           })
           .catch((err) => {
             Toast(err.msg)
           })
+      },
+      onRefresh() {
+        this.page = 1
+        this.dataList = [];
+        this.finished = false;
+        this.loading = true;
+        this.initData();
       },
     }
   }

@@ -366,3 +366,12 @@ export function orderDetails(params) {
     hideloading: true
   })
 }
+// 我的动态
+export function collectList(params) {
+  return request({
+    url: api.CollectList,
+    method: 'POST',
+    params,
+    hideloading: true
+  })
+}

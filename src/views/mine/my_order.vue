@@ -45,8 +45,8 @@
     },
     mounted() {
       this.active = this.$route.query.active;
-      this.$route.query.active == 4 ? this.initData(6) : this.initData(this.$route.query.active - 1)
-
+      this.$route.query.active == 4 ? this.type=6 : this.type = this.$route.query.active - 1
+      this.initData()
     },
     components: {
       GoodsItem

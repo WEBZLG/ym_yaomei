@@ -1,11 +1,15 @@
 <template>
   <div class="replenish_list">
     <!-- 标签栏 -->
-    <van-tabs v-model="active" color="#395467" swipe-threshold="6" sticky  title-inactive-color="#282828"
+    <van-tabs v-model="active" color="#395467" swipe-threshold="6" sticky title-inactive-color="#282828"
       title-active-color="#3a576a" @click="onTabs">
       <van-tab v-for="(item,index) in tabList" :title="item" :key='index'>
         <div>
-          <GoodsReplenish  v-for="(item,index) in dataList" :key='index' :content='item' @action="onAction" @detail="onDetail"></GoodsReplenish>
+          <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+            <van-list v-model="loading" :finished="finished" :finished-text="finishedText" @load="initData">
+              <GoodsReplenish v-for="(item,index) in dataList" :key='index' :content='item' @action="onAction" @detail="onDetail"></GoodsReplenish>
+            </van-list>
+          </van-pull-refresh>
         </div>
       </van-tab>
     </van-tabs>
@@ -13,7 +17,7 @@
 </template>
 
 <script>
-    import GoodsReplenish from '@/components/GoodsReplenish'
+  import GoodsReplenish from '@/components/GoodsReplenish'
   import {
     Toast
   } from 'vant';
@@ -26,44 +30,74 @@
       return {
         active: 0,
         tabList: ['待审核', '已审核', '已驳回', '已预期'],
-        dataList:[],
+        page: 1,
+        status:0,
+        dataList: [],
+        loading: false,
+        finished: false,
+        refreshing: false,
+        finishedText: '',
       }
     },
     mounted() {
-      this.active = this.$route.query.active
-      this.initData(0)
+      // this.active = this.$route.query.active
+      // this.initData(0)
     },
-    components:{
+    components: {
       GoodsReplenish
     },
     methods: {
-      onClickLeft() {
-        this.$router.go(-1)
+      onAction(type, id) {
+        console.log(type, id)
       },
-      onAction(type,id){
-          console.log(type,id)
-      },
-      onDetail(){
+      onDetail() {
         console.log('详情')
       },
-      onTabs(e){
+      onTabs(e) {
         console.log(e)
-         this.initData(e)
+        this.status = e
+        this.onRefresh()
       },
-      initData(status) {
+      // 请求数据
+      initData() {
         const params = {
           uid: '2',
-          status:status
+          page: this.page,
+          status:this.status
         }
-
         replenishList(params)
           .then((res) => {
             console.log(res)
-            this.dataList = res.data
+            if (this.refreshing) {
+              this.dataList = [];
+              this.refreshing = false;
+            }
+            if (res.data.length > 0) {
+              for (let item of res.data) {
+                this.dataList.push(item)
+              }
+              this.page++
+            } else {
+              this.finished = true
+            }
+            if (this.dataList.length > 0) {
+              this.finishedText = '没有更多了'
+            } else {
+              this.finishedText = ''
+            }
+            this.loading = false;
+            // this.isDisable = false
           })
           .catch((err) => {
             Toast(err.msg)
           })
+      },
+      onRefresh() {
+        this.page = 1
+        this.dataList = [];
+        this.finished = false;
+        this.loading = true;
+        this.initData();
       },
     }
   }

@@ -5,24 +5,28 @@
       <van-tab v-for="(item,index) in tabList" :title="item.name+'('+item.num+')'" :key='index'>
         <!-- 列表 -->
         <div class="container">
-          <van-cell-group>
-            <van-cell center v-for="(item,index) in dataList" :key="index">
-              <template #title>
-                <div class="head"><img :src="item.avatar" alt=""></div>
-                <div class="infor">
-                  <div>
-                    <span class="name">{{item.nickname}}</span>
-                    <span class="level"><img :src="item.group_name" alt=""></span>
-                  </div>
-                  <div>{{item.mobile}}</div>
-                  <div>{{item.createtime}}</div>
-                </div>
-              </template>
-              <template #right-icon>
-                <van-button type="default" @click="onOther(item.id)">Ta的团队</van-button>
-              </template>
-            </van-cell>
-          </van-cell-group>
+          <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+            <van-list v-model="loading" :finished="finished" :finished-text="finishedText" @load="myTeam">
+              <van-cell-group>
+                <van-cell center v-for="(item,index) in dataList" :key="index">
+                  <template #title>
+                    <div class="head"><img :src="item.avatar" alt=""></div>
+                    <div class="infor">
+                      <div>
+                        <span class="name">{{item.nickname}}</span>
+                        <span class="level"><img :src="item.group_name" alt=""></span>
+                      </div>
+                      <div>{{item.mobile}}</div>
+                      <div>{{item.createtime}}</div>
+                    </div>
+                  </template>
+                  <template #right-icon>
+                    <van-button type="default" @click="onOther(item.id)">Ta的团队</van-button>
+                  </template>
+                </van-cell>
+              </van-cell-group>
+            </van-list>
+          </van-pull-refresh>
         </div>
       </van-tab>
     </van-tabs>
@@ -38,19 +42,27 @@
     data() {
       return {
         tabList: [],
-        dataList:[]
+        dataList: [],
+        page: 1,
+        gid: '',
+        dataList: [],
+        loading: false,
+        finished: false,
+        refreshing: false,
+        finishedText: '',
       }
     },
     mounted() {
       this.initData()
     },
     methods: {
-      onTabs(e){
+      onTabs(e) {
         console.log(e)
-        this.myTeam(e)
+        this.gid = e
+        this.onRefresh()
       },
-      onOther(e){
-        
+      onOther(e) {
+
       },
       initData() {
         const params = {
@@ -59,27 +71,54 @@
         myTeamnav(params)
           .then((res) => {
             this.tabList = res.data
-            this.myTeam(res.data[0].id)
+            this.gid = es.data[0].id
           })
           .catch((err) => {
             Toast(err.msg)
           })
       },
-      myTeam(gid){
-        let _this = this
+
+      // 请求数据
+      myTeam() {
         const params = {
           uid: '2',
-          group_id:gid
+          group_id: this.gid,
+          page: this.page
         }
         myTeam(params)
           .then((res) => {
             console.log(res)
-            _this.dataList = res.data
+            if (this.refreshing) {
+              this.dataList = [];
+              this.refreshing = false;
+            }
+            if (res.data.length > 0) {
+              for (let item of res.data) {
+                this.dataList.push(item)
+              }
+              this.page++
+            } else {
+              this.finished = true
+            }
+            if (this.dataList.length > 0) {
+              this.finishedText = '没有更多了'
+            } else {
+              this.finishedText = ''
+            }
+            this.loading = false;
+            // this.isDisable = false
           })
           .catch((err) => {
             Toast(err.msg)
           })
-      }
+      },
+      onRefresh() {
+        this.page = 1
+        this.dataList = [];
+        this.finished = false;
+        this.loading = true;
+        this.myTeam();
+      },
     }
   }
 </script>

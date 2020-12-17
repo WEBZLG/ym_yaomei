@@ -38,7 +38,8 @@ const api = {
   ReplenishAction:'/replenishAction',
   UserWithdraw:'/user_withdraw',
   AppWithdraw:'/app_withdraw',
-  OrderDetails:'/orderDetails'
+  OrderDetails:'/orderDetails',
+  CollectList:'/collect_list'
 }
 
 export default api
